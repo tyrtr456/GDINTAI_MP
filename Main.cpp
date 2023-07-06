@@ -1,18 +1,16 @@
 #include "iostream"
-#include "cstdlib"
+#include "unordered_map"
+#include "vector"
 #include "cmath"
 
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 
-#include "Controller/Game.cpp"
-#include "Config/Config.h"
+#include "../source/Application.cpp"
 
-
-int main(){
-
-    Game CGame;
-    CGame.run();
+int main() {
+    srand(time(0));
+    Application game;
 
     return 0;
 }
-
