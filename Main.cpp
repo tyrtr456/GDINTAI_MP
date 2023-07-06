@@ -6,7 +6,15 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Audio.hpp"
 
-#include "../source/Application.cpp"
+#include "source/Application.cpp"
+#include "source/Base.cpp"
+#include "source/Bullet.cpp"
+#include "source/Enemy.cpp"
+#include "source/Map.cpp"
+#include "source/Message.cpp"
+#include "source/Player.cpp"
+#include "source/Tank.cpp"
+
 
 int main() {
     srand(time(0));

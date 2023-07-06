@@ -12,34 +12,34 @@ void Enemy::move(const sf::Int64 &time) {
     this->timeBeforeMoving += time;
 
     if (this->timeBeforeMoving > 1000 + rand() % 501) {
-        mDir = rand() % 4;
+        this->mDir = rand() % 4;
         this->timeBeforeMoving = 0.f;
     }
 
     switch (mDir) {
         case 0:
-            mDx = mSpeed;
-            mDy = 0;
+            this->mDx = this->mSpeed;
+            this->mDy = 0;
             break;
 
         case 1:
-            mDx = -mSpeed;
-            mDy = 0;
+            this->mDx = -mSpeed;
+            this->mDy = 0;
             break;
 
         case 2:
-            mDx = 0;
-            mDy = mSpeed;
+            this->mDx = 0;
+            this->mDy = this->mSpeed;
             break;
 
         case 3:
-            mDx = 0;
-            mDy = -mSpeed;
+            this->mDx = 0;
+            this->mDy = -this->mSpeed;
             break;
     }
-    if (mCollision) tank_interaction();
-    mX += mDx * time;
-    mY += mDy * time;
+    if (this->mCollision) tank_interaction();
+    this->mX += this->mDx * time;
+    this->mY += this->mDy * time;
 }
 
 void Enemy::shoot(const float &time) {
@@ -56,14 +56,14 @@ void Enemy::shoot(const float &time) {
 }
 
 void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision) {
-    mCollision = collision;
-    move(time);
+    this->mCollision = collision;
+    this->move(time);
 
-    mSpeed = 0.f;
-    mSprite.setPosition(mX, mY);
-    animate(time);
-    map_interaction(map);
+    this->mSpeed = 0.f;
+    this->mSprite.setPosition(this->mX, this->mY);
+    this->animate(time);
+    this->map_interaction(map);
 
-    bullet.update(map, time, mX, mY, mDir);
-    shoot(time);
+    this->bullet.update(map, time, this->mX, this->mY, this->mDir);
+    this->shoot(time);
 }

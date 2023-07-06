@@ -1,4 +1,4 @@
-#include <Map.h>
+#include "../include/Map.h"
 
 Map::Map() {
     TileMap = new sf::String[HEIGHT_MAP] {

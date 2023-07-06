@@ -34,6 +34,7 @@ namespace models{
             sf::Texture getTexture();
             sf::Sprite getSprite();
             void setpresent(bool bVal);
+            void setBeforeShot(float fVal);
 
 
     };

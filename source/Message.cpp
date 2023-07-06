@@ -1,5 +1,5 @@
-//#include <SFML/System/String.hpp>
-#include <Message.h>
+
+#include "../include/Message.h"
 
 Message::Message(const float &x, const float &y, const sf::String &str)
     : mX(x), mY(y) {

@@ -1,5 +1,4 @@
-#include "Tank.h"
-
+#include "../include/Tank.h"
 
 using namespace models;
 
@@ -8,25 +7,25 @@ Tank::Tank(const float &x, const float &y, const float &width, const float &heig
     mCurrentFrame(0.f), mSpeed(0.f), mWidth(width), mHeight(height), 
     bullet(x, y) {
 
-    mTexture.loadFromFile(mFile);
-    mSprite.setTexture(mTexture);
-    mSprite.setTextureRect(sf::IntRect(78, 39, mWidth, mHeight));
-    mSprite.setPosition(x, y);
+    this->mTexture.loadFromFile(mFile);
+    this->mSprite.setTexture(mTexture);
+    this->mSprite.setTextureRect(sf::IntRect(78, 39, mWidth, mHeight));
+    this->mSprite.setPosition(x, y);
 }
 
 void Tank::animate(const sf::Int64 &time) {
-    mCurrentFrame += 0.005f * time;
-    if (mCurrentFrame >= 2)
-        mCurrentFrame -= 2;
+    this->mCurrentFrame += 0.005f * time;
+    if (this->mCurrentFrame >= 2)
+        this->mCurrentFrame -= 2;
 
-    if (mDx > 0.f)
-        mSprite.setTextureRect(sf::IntRect(0 + 39 * (int)mCurrentFrame, 0, 39, 39));
-    if (mDx < 0.f)
-        mSprite.setTextureRect(sf::IntRect(78 + 39 * (int)mCurrentFrame, 0, 39, 39));
-    if (mDy > 0.0f)
-        mSprite.setTextureRect(sf::IntRect(0 + 39 * (int)mCurrentFrame, 39, 39, 39));
-    if (mDy < 0.0f)
-        mSprite.setTextureRect(sf::IntRect(78 + 39 * (int)mCurrentFrame, 39, 39, 39));
+    if (this->mDx > 0.f)
+        this->mSprite.setTextureRect(sf::IntRect(0 + 39 * (int)mCurrentFrame, 0, 39, 39));
+    if (this->mDx < 0.f)
+        this->mSprite.setTextureRect(sf::IntRect(78 + 39 * (int)mCurrentFrame, 0, 39, 39));
+    if (this->mDy > 0.0f)
+        this->mSprite.setTextureRect(sf::IntRect(0 + 39 * (int)mCurrentFrame, 39, 39, 39));
+    if (this->mDy < 0.0f)
+        this->mSprite.setTextureRect(sf::IntRect(78 + 39 * (int)mCurrentFrame, 39, 39, 39));
 }
 
 void Tank::collapse() {
@@ -41,34 +40,34 @@ void Tank::map_interaction(Map &map) {
             char tile = map.get_tile(i, j);
 
             if (tile >= '0' && tile <= '2') {
-                if (mDy > 0.f)
-                    mY = i * 24 - mHeight;
+                if (this->mDy > 0.f)
+                    this->mY = i * 24 - this->mHeight;
 
-                if (mDy < 0.f)
-                    mY = (float)i * 24 + 24;
+                if (this->mDy < 0.f)
+                    this->mY = (float)i * 24 + 24;
 
-                if (mDx > 0.f)
-                    mX = j * 24 - mWidth;
+                if (this->mDx > 0.f)
+                    this->mX = j * 24 - this->mWidth;
 
-                if (mDx < 0.f)
-                    mX = (float)j * 24 + 24;
+                if (this->mDx < 0.f)
+                    this->mX = (float)j * 24 + 24;
             }
         }
 
 }
 
 void Tank::tank_interaction() {
-    if (mDy > 0.f)
-        mY -= 0.3f;
+    if (this->mDy > 0.f)
+        this->mY -= 0.3f;
 
-    if (mDy < 0.f)
-        mY += 0.3f;
+    if (this->mDy < 0.f)
+        this->mY += 0.3f;
 
-    if (mDx > 0.f)
-        mX -= 0.3f;
+    if (this->mDx > 0.f)
+        this->mX -= 0.3f;
 
-    if (mDx < 0.f)
-        mX += 0.3f;
+    if (this->mDx < 0.f)
+        this->mX += 0.3f;
 }
 
 sf::Sprite* Tank::getSprite(){
