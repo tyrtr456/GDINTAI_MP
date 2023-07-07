@@ -18,7 +18,7 @@ Application::Application()
 
         process_events();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+        if (sf::Key(sf::Keyboard::Enter))
             this->gameStarted = true;
 
         if (this->gameStarted && !this->gameOver)
