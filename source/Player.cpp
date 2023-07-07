@@ -4,7 +4,7 @@
 using namespace models;
 
 Player::Player()
-    : Tank(244, 600, 39, 39, "battle-city-src/media/playerSprites.png") {
+    : Tank(244, 600, 39, 39, "media/playerSprites.png") {
 
 }
 

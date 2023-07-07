@@ -1,4 +1,5 @@
 #include "../include/Bullet.h"
+//#include "Bullet.h"
 
 
 using namespace models;
@@ -6,7 +7,7 @@ using namespace models;
 Bullet::Bullet(const float &x, const float &y)
     : present(false), mX(x), mY(y), mDir(0), mDx(0.f), mDy(0.f), timeBeforeShot(0.f) {
 
-    mTexture.loadFromFile("battle-city-src/media/bulletSprite.png");
+    mTexture.loadFromFile("media/bulletSprite.png");
     mSprite.setTexture(mTexture);
     mSprite.setTextureRect(sf::IntRect(0, 0, 9, 12));
     mSprite.setPosition(x, y);
@@ -91,8 +92,58 @@ void Bullet::map_interaction(Map &map) {
         }
 }
 
-void Bullet::setpresent(bool bVal){
+float Bullet::getmX()
+{
+    return mX;
+}
+
+float Bullet::getmY()
+{
+    return this->mY;
+}
+
+float Bullet::getmDx()
+{
+    return this->mDx;
+}
+
+float Bullet::getmDy()
+{
+    return this->mDy;
+}
+
+int Bullet::getmDir()
+{
+    return this->mDir;
+}
+
+bool Bullet::getpresent()
+{
+    return this->present;
+}
+
+float Bullet::getBeforeShot()
+{
+    return this->timeBeforeShot;
+}
+
+sf::Texture Bullet::getTexture()
+{
+    return this->mTexture;
+}
+
+sf::Sprite Bullet::getSprite()
+{
+    return this->mSprite;
+}
+
+void Bullet::setpresent(bool bVal)
+{
 
     this->present = bVal;
-    
+}
+
+void models::Bullet::setBeforeShot(float fVal)
+{
+    this->timeBeforeShot = fVal;
 }

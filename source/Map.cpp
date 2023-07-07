@@ -32,7 +32,7 @@ Map::Map() {
         "000000000000000000000000000000",
     };
 
-    mTexture.loadFromFile("battle-city-src/media/groundSprites.png");
+    mTexture.loadFromFile("media/groundSprites.png");
     mTexture.setSmooth(true);
     mSprite.setTexture(mTexture);
 }

@@ -1,9 +1,10 @@
 #include "../include/Enemy.h"
+//#include "Enemy.h"
 
 using namespace models;
 
 Enemy::Enemy(const float &x, const float &y)
-    : Tank(x, y, 39, 39, "battle-city-src/media/enemySprites.png"), timeBeforeMoving(0.f), timeBeforeShot(0.f) {
+    : Tank(x, y, 39, 39, "media/enemySprites.png"), timeBeforeMoving(0.f), timeBeforeShot(0.f) {
 
 }
 
@@ -66,4 +67,22 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision) {
 
     this->bullet.update(map, time, this->mX, this->mY, this->mDir);
     this->shoot(time);
+}
+float Enemy::getBeforeMoving()
+{
+    return this->timeBeforeMoving;
+}
+
+float Enemy::getBeforeShot()
+{
+    return this->timeBeforeShot;
+}
+
+void Enemy::setBeforeMoving()
+{
+    //this->getBeforeMoving = 
+}
+
+void Enemy::setBeforeShot()
+{
 }

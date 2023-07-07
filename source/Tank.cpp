@@ -1,4 +1,5 @@
 #include "../include/Tank.h"
+//#include "Tank.h"
 
 using namespace models;
 
@@ -70,8 +71,64 @@ void Tank::tank_interaction() {
         this->mX += 0.3f;
 }
 
+float Tank::getmX()
+{
+    return this->mX;
+}
+
+float Tank::getmY()
+{
+    return this->mY;
+}
+
+float Tank::getmWidth()
+{
+    return this->mWidth;
+}
+
+float Tank::getmHeight()
+{
+    return this->mHeight;
+}
+
+float Tank::getmDx()
+{
+    return this->mDx;
+}
+
+float Tank::getmDy()
+{
+    return this->mDy;
+}
+
+float Tank::getSpeed()
+{
+    return this->mSpeed;
+}
+
+int Tank::getDir()
+{
+    return this->mDir;
+}
+
+float Tank::getCurrentFrame()
+{
+    return this->mCurrentFrame;
+}
+
+bool Tank::getCollision()
+{
+    return this->mCollision;
+}
+
+bool Tank::getlife()
+{
+    return this->life;
+}
+
 sf::Sprite* Tank::getSprite(){
 
+    
     return &(this->mSprite);
 
 }
