@@ -11,7 +11,7 @@ namespace controllers{
 
     using namespace models;
 
-    class Application : private sf::NonCopyable {
+    class Application {
 
     private:
         bool gameOver;

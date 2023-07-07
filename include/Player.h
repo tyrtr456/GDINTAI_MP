@@ -2,6 +2,7 @@
 #define MODELS_PLAYERS_H
 
 #include "Tank.h"
+#include "Map.h"
 
 namespace models {
 

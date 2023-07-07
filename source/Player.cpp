@@ -1,7 +1,7 @@
-#include <SFML/Window/Keyboard.hpp>
-#include <Player.h>
-#include <Map.h>
-using sf::Keyboard;
+
+#include "../include/Player.h"
+
+using namespace models;
 
 Player::Player()
     : Tank(244, 600, 39, 39, "battle-city-src/media/playerSprites.png") {
@@ -9,22 +9,22 @@ Player::Player()
 }
 
 void Player::move(const sf::Int64 &time) {
-    if (Keyboard::isKeyPressed(Keyboard::Left)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         mDir = 1;
         mSpeed = 0.11f;
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Right)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         mDir = 0;
         mSpeed = 0.11f;
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Up)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         mDir = 3;
         mSpeed = 0.11f;
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Down)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         mDir = 2;
         mSpeed = 0.11f;
     }
@@ -50,27 +50,27 @@ void Player::move(const sf::Int64 &time) {
             mDy = -mSpeed;
             break;
     }
-    if (mCollision) tank_interaction();
-    mX += mDx * time;
-    mY += mDy * time;
+    if (this->mCollision) tank_interaction();
+    this->mX += this->mDx * time;
+    this->mY += this->mDy * time;
 }
 
 void Player::update(const sf::Int64 &time, Map &map, const bool &collision) {
     mCollision = collision;
     move(time);
 
-    mSpeed = 0.f;
-    mSprite.setPosition(mX, mY);
+    this->mSpeed = 0.f;
+    this->mSprite.setPosition(mX, mY);
     animate(time);
     map_interaction(map);
 
-    bullet.update(map, time, mX, mY, mDir);
-    if (!bullet.present)
-        if (Keyboard::isKeyPressed(Keyboard::Space)) {
-            bullet.timeBeforeShot += time;
-            if (bullet.timeBeforeShot > 10.f) {
-                bullet.present = true;
-                bullet.timeBeforeShot = 0.f;
+    this->bullet.update(map, time, mX, mY, mDir);
+    if (!this->bullet.getpresent())
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            this->bullet.setBeforeShot(this->bullet.getBeforeShot() + time);
+            if (this->bullet.getBeforeShot() > 10.f) {
+                this->bullet.setpresent(true);
+                this->bullet.setBeforeShot(0.f);
             }
         }
 }
