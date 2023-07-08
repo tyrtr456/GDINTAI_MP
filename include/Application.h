@@ -7,6 +7,8 @@
 #include "Base.h"
 #include "Message.h"
 
+#include "vector"
+
 namespace controllers{
 
     using namespace models;
@@ -22,7 +24,7 @@ namespace controllers{
         Base mBase;
         Map map;
         Player mPlayer;
-        Enemy *packOfEnemies;
+        std::vector<Enemy*> packOfEnemies;
 
         Message msgStart;
         Message msgOver;
