@@ -11,6 +11,7 @@ namespace models{
         static const int WIDTH_MAP = 30;
 
         sf::String *TileMap;
+        int TileMapData[HEIGHT_MAP][WIDTH_MAP];
         sf::Texture mTexture;
         sf::Sprite mSprite;
 
@@ -21,6 +22,10 @@ namespace models{
         void break_wall(const int &i, const int &j);
         const char get_tile(const int &i, const int &j) { return TileMap[i][j]; }
         void draw(sf::RenderWindow &window);
+
+    public:
+        int getMapDataOnTile(int nRowNo, int nColNo);
+
 
     };
 

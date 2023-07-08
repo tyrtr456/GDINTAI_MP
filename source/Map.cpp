@@ -47,18 +47,22 @@ void Map::draw(sf::RenderWindow &window) {
             switch (TileMap[i][j]) {
                 case ' ':
                     mSprite.setTextureRect(sf::IntRect(0, 0, 24, 24));
+                    this->TileMapData[i][j] = 1; // 1 denotes passable
                     break;
 
                 case '0':
                     mSprite.setTextureRect(sf::IntRect(72, 0, 24, 24));
+                    this->TileMapData[i][j] = -1; // denotes impassable
                     break;
 
                 case '1':
                     mSprite.setTextureRect(sf::IntRect(24, 0, 24, 24));
+                    this->TileMapData[i][j] = 2; // denotes destructable
                     break;
 
                 case '2':
                     mSprite.setTextureRect(sf::IntRect(48, 0, 24, 24));
+                    this->TileMapData[i][j] = -1; // denotes impassable
                     break;
             }
 
@@ -66,3 +70,11 @@ void Map::draw(sf::RenderWindow &window) {
             window.draw(mSprite);
         }
 }
+
+int Map::getMapDataOnTile(int nRowNo, int nColNo){
+
+    return this->TileMapData[nRowNo][nColNo];
+
+}
+
+
