@@ -17,7 +17,7 @@ namespace models{
 
         void move(const sf::Int64 &time);
         void shoot(const float &time);
-        void update(const sf::Int64 &time, Map &map, const bool &collision);
+        void update(const sf::Int64 &time, Map &map, const bool &collision, Player &player);
 
     public:
         float getBeforeMoving();

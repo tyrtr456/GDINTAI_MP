@@ -76,7 +76,7 @@ void Application::update(const sf::Int64 &time) {
 
     for (Enemy* enemyTank : this->packOfEnemies) {
         if (enemyTank->getlife()) {
-            enemyTank->update(time, map, collision);
+            enemyTank->update(time, map, collision, this->mPlayer);
 
             if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(this->mPlayer.getSprite()->getGlobalBounds())
                 && enemyTank->getbullet()->getpresent()) {
