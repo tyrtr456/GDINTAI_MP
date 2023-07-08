@@ -7,22 +7,26 @@ Application::Application()
     msgStart(90, 330, "Press \'Enter\' to start"), msgOver(250, 300, "Game over"),
     msgLost(260, 350, "You lost"), msgWon(265, 350, "You won"), frags(0) {
 
-    sf::Clock clock;
+    sf::Clock clock = sf::Clock();
+    sf::Time tLastUpdate = sf::Time::Zero;
+    sf::Time tTimePerFrame = sf::seconds(1.0f / 60);
 
     this->packOfEnemies = new Enemy[4]{ Enemy(52,31), Enemy(147,391), Enemy(532,391), Enemy(628,31) };
 
     while (this->mWindow.isOpen()) {
-        sf::Int64 time = clock.getElapsedTime().asMicroseconds();
-        clock.restart();
-        time /= 800;
+        tLastUpdate += clock.restart();
+
 
         process_events();
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
             this->gameStarted = true;
 
-        if (this->gameStarted && !this->gameOver)
-            update(time);
+        while(tLastUpdate > tTimePerFrame){
+            tLastUpdate -= tTimePerFrame;
+            if (this->gameStarted && !this->gameOver)
+                update(tTimePerFrame.asMilliseconds());
+        }
         render();
     }
 }
@@ -58,6 +62,7 @@ void Application::update(const sf::Int64 &time) {
     for (int i(0); i < 4; ++i) {
         collision = this->mPlayer.getSprite()->getGlobalBounds().intersects(packOfEnemies[i].getSprite()->getGlobalBounds());
         if (collision)
+            std::cout<<"Collision Detected"<<std::endl;
             break;
     }
 
