@@ -17,7 +17,7 @@ void Enemy::move(const sf::Int64 &time) {
         this->timeBeforeMoving = 0.f;
     }
 
-    switch (mDir) {
+    switch (this->mDir) {
         case 0:
             this->mDx = this->mSpeed;
             this->mDy = 0;
@@ -78,11 +78,12 @@ float Enemy::getBeforeShot()
     return this->timeBeforeShot;
 }
 
-void Enemy::setBeforeMoving()
+void Enemy::setBeforeMoving(float nVal)
 {
-    //this->getBeforeMoving = 
+    this->timeBeforeMoving = nVal;
 }
 
-void Enemy::setBeforeShot()
+void Enemy::setBeforeShot(float nVal)
 {
+     this->timeBeforeShot = nVal;
 }

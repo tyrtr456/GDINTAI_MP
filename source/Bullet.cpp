@@ -1,5 +1,4 @@
 #include "../include/Bullet.h"
-//#include "Bullet.h"
 
 
 using namespace models;
@@ -14,35 +13,35 @@ Bullet::Bullet(const float &x, const float &y)
 }
 
 void Bullet::move(const sf::Int64 &time) {
-    switch (mDir) {
+    switch (this->mDir) {
         case 0:
-            mDx = 0.3f;
-            mDy = 0;
-			mSprite.setRotation(90.f);
+            this->mDx = 0.3f;
+            this->mDy = 0;
+			this->mSprite.setRotation(90.f);
             break;
 
         case 1:
-            mDx = -0.3f;
-            mDy = 0;
-			mSprite.setRotation(-90.f);
+            this->mDx = -0.3f;
+            this->mDy = 0;
+			this->mSprite.setRotation(-90.f);
             break;
 
         case 2:
-            mDx = 0;
-            mDy = 0.3f;
-			mSprite.setRotation(180.f);
+            this->mDx = 0;
+            this->mDy = 0.3f;
+			this->mSprite.setRotation(180.f);
             break;
 
         case 3:
-            mDx = 0;
-            mDy = -0.3f;
-			mSprite.setRotation(0.f);
+            this->mDx = 0;
+            this->mDy = -0.3f;
+			this->mSprite.setRotation(0.f);
             break;
     }
 
-    mX += mDx * time;
-    mY += mDy * time;
-	mSprite.setPosition(mX, mY);
+    this->mX += this->mDx * time;
+    this->mY += this->mDy * time;
+	this->mSprite.setPosition(this->mX, this->mY);
 }
 
 void Bullet::update(Map &map, const sf::Int64 &time, float &x, const float &y, const int &dir) {
@@ -51,43 +50,43 @@ void Bullet::update(Map &map, const sf::Int64 &time, float &x, const float &y, c
         map_interaction(map);
     }
     else {
-		mDir = dir;
-        switch (mDir) {
+		this->mDir = dir;
+        switch (this->mDir) {
         case 0:
-            mX = x + 35.f;
-            mY = y + 15.f;
+            this->mX = x + 35.f;
+            this->mY = y + 15.f;
             break;
 
         case 1:
-            mX = x + 7.f;
-            mY = y + 23.f;
+            this->mX = x + 7.f;
+            this->mY = y + 23.f;
             break;
 
         case 2:
-            mX = x + 23.f;
-            mY = y + 32.f;
+            this->mX = x + 23.f;
+            this->mY = y + 32.f;
             break;
 
         case 3:
-            mX = x + 15.f;
-            mY = y + 5.f;
+            this->mX = x + 15.f;
+            this->mY = y + 5.f;
             break;
         }
-		mSprite.setPosition(mX, mY);
+		this->mSprite.setPosition(this->mX, this->mY);
     }
 }
 
 void Bullet::map_interaction(Map &map) {
-    for (int i = mY / 24; i < (mY + 12) / 24; ++i)
-        for (int j = mX / 24; j < (mX + 9) / 24; ++j) {
+    for (int i = this->mY / 24; i < (this->mY + 12) / 24; ++i)
+        for (int j = this->mX / 24; j < (this->mX + 9) / 24; ++j) {
             char tile = map.get_tile(i, j);
 
             if (tile == '0' || tile == '2')
-                present = false;
+                this->present = false;
 
             if (tile == '1') {
                 map.break_wall(i, j);
-                present = false;
+                this->present = false;
             }
         }
 }

@@ -1,7 +1,7 @@
 #include "../include/Map.h"
 
 Map::Map() {
-    TileMap = new sf::String[HEIGHT_MAP] {
+    this->TileMap = new sf::String[HEIGHT_MAP] {
         "000000000000000000000000000000",
         "00                          00",
         "00                          00",
@@ -32,13 +32,13 @@ Map::Map() {
         "000000000000000000000000000000",
     };
 
-    mTexture.loadFromFile("media/groundSprites.png");
-    mTexture.setSmooth(true);
-    mSprite.setTexture(mTexture);
+    this->mTexture.loadFromFile("media/groundSprites.png");
+    this->mTexture.setSmooth(true);
+    this->mSprite.setTexture(this->mTexture);
 }
 
 void Map::break_wall(const int &i, const int &j) {
-    TileMap[i][j] = ' ';
+    this->TileMap[i][j] = ' ';
 }
 
 void Map::draw(sf::RenderWindow &window) {
