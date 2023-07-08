@@ -77,4 +77,12 @@ int Map::getMapDataOnTile(int nRowNo, int nColNo){
 
 }
 
+void Map::setMapDataOnTile(int nRowNo, int nColNo, int nVal){
+
+
+    this->TileMapData[nRowNo][nColNo] = nVal;
+
+
+}
+
 
