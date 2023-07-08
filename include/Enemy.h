@@ -22,8 +22,8 @@ namespace models{
     public:
         float getBeforeMoving();
         float getBeforeShot();
-        void setBeforeMoving();
-        void setBeforeShot();
+        void setBeforeMoving(float nVal);
+        void setBeforeShot(float nVal);
 
     };
 
