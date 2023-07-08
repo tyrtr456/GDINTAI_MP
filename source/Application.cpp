@@ -70,6 +70,7 @@ void Application::update(const sf::Int64 &time) {
             
     }
 
+
     if (this->mPlayer.getlife())
         this->mPlayer.update(time, map, collision);
 

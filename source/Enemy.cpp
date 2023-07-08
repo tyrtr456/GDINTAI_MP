@@ -48,9 +48,12 @@ void Enemy::shoot(const float &time) {
     this->timeBeforeShot += time;
 
     if (this->timeBeforeShot > 1000.f) {
-        if (this->getbullet()->getpresent() == false)
-            if (rand() % 2)
-                this->getbullet()->getpresent() == true;
+        
+        if (this->bullet.getpresent() == false)
+            if (rand() % 2){
+                std::cout<<"Preparing Shot"<<std::endl;
+                this->bullet.setpresent(true);
+            }
 
         this->timeBeforeShot = 0.f;
     }
