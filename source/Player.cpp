@@ -10,44 +10,44 @@ Player::Player()
 
 void Player::move(const sf::Int64 &time) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        this->mDir = 1;
-        this->mSpeed = 1.0f;
+        mDir = 1;
+        mSpeed = 0.11f;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        this->mDir = 0;
-        this->mSpeed = 1.0f;
+        mDir = 0;
+        mSpeed = 0.11f;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        this->mDir = 3;
-        this->mSpeed = 1.0f;
+        mDir = 3;
+        mSpeed = 0.11f;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        this->mDir = 2;
-        this->mSpeed = 1.0f;
+        mDir = 2;
+        mSpeed = 0.11f;
     }
 
     switch (mDir) {
         case 0:
-            this->mDx = this->mSpeed;
-            this->mDy = 0;
+            mDx = mSpeed;
+            mDy = 0;
             break;
 
         case 1:
-            this->mDx = -this->mSpeed;
-            this->mDy = 0;
+            mDx = -mSpeed;
+            mDy = 0;
             break;
 
         case 2:
-            this->mDx = 0;
-            this->mDy = this->mSpeed;
+            mDx = 0;
+            mDy = mSpeed;
             break;
 
         case 3:
-            this->mDx = 0;
-            this->mDy = -this->mSpeed;
+            mDx = 0;
+            mDy = -mSpeed;
             break;
     }
     if (this->mCollision) tank_interaction();
@@ -56,7 +56,7 @@ void Player::move(const sf::Int64 &time) {
 }
 
 void Player::update(const sf::Int64 &time, Map &map, const bool &collision) {
-    this->mCollision = collision;
+    mCollision = collision;
     move(time);
 
     this->mSpeed = 0.f;
