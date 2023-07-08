@@ -15,26 +15,26 @@ Bullet::Bullet(const float &x, const float &y)
 void Bullet::move(const sf::Int64 &time) {
     switch (this->mDir) {
         case 0:
-            this->mDx = 0.3f;
+            this->mDx = 1.0f;
             this->mDy = 0;
 			this->mSprite.setRotation(90.f);
             break;
 
         case 1:
-            this->mDx = -0.3f;
+            this->mDx = -1.0f;
             this->mDy = 0;
 			this->mSprite.setRotation(-90.f);
             break;
 
         case 2:
             this->mDx = 0;
-            this->mDy = 0.3f;
+            this->mDy = 1.0f;
 			this->mSprite.setRotation(180.f);
             break;
 
         case 3:
             this->mDx = 0;
-            this->mDy = -0.3f;
+            this->mDy = -1.0f;
 			this->mSprite.setRotation(0.f);
             break;
     }
