@@ -11,8 +11,11 @@ Application::Application()
     sf::Time tLastUpdate = sf::Time::Zero;
     sf::Time tTimePerFrame = sf::seconds(1.0f / 60);
 
-    this->packOfEnemies = new Enemy[4]{ Enemy(52,31), Enemy(147,391), Enemy(532,391), Enemy(628,31) };
-
+    this->packOfEnemies.push_back(new Enemy(52,31));
+    this->packOfEnemies.push_back(new Enemy(147,391));
+    this->packOfEnemies.push_back(new Enemy(532,391));
+    this->packOfEnemies.push_back(new Enemy(628,31));
+   
     while (this->mWindow.isOpen()) {
         tLastUpdate += clock.restart();
 
@@ -43,8 +46,8 @@ void Application::process_events() {
 }
 
 void Application::update(const sf::Int64 &time) {
-    for (int i(0); i < 4; ++i)
-        if (!packOfEnemies[i].getlife())
+    for (Enemy* enemyTank : this->packOfEnemies)
+        if (!enemyTank->getlife())
             ++this->frags;
         else {
             this->frags = 0;
@@ -59,34 +62,35 @@ void Application::update(const sf::Int64 &time) {
 
     bool collision;
 
-    for (int i(0); i < 4; ++i) {
-        collision = this->mPlayer.getSprite()->getGlobalBounds().intersects(packOfEnemies[i].getSprite()->getGlobalBounds());
+    for (Enemy* enemyTank : this->packOfEnemies) {
+        collision = this->mPlayer.getSprite()->getGlobalBounds().intersects(enemyTank->getSprite()->getGlobalBounds());
         if (collision)
-            std::cout<<"Collision Detected"<<std::endl;
-            break;
+            this->mPlayer.collapse();
+            //std::cout<<"Collision Detected"<<std::endl;
+            
     }
 
     if (this->mPlayer.getlife())
         this->mPlayer.update(time, map, collision);
 
-    for (int i(0); i < 4; ++i) {
-        if (packOfEnemies[i].getlife()) {
-            packOfEnemies[i].update(time, map, collision);
+    for (Enemy* enemyTank : this->packOfEnemies) {
+        if (enemyTank->getlife()) {
+            enemyTank->update(time, map, collision);
 
-            if (packOfEnemies[i].getbullet()->getSprite().getGlobalBounds().intersects(this->mPlayer.getSprite()->getGlobalBounds())
-                && packOfEnemies[i].getbullet()->getpresent()) {
+            if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(this->mPlayer.getSprite()->getGlobalBounds())
+                && enemyTank->getbullet()->getpresent()) {
                 this->mPlayer.collapse();
-                packOfEnemies[i].getbullet()->setpresent(false);
+                enemyTank->getbullet()->setpresent(false);
             }
 
-            if (packOfEnemies[i].getbullet()->getSprite().getGlobalBounds().intersects(this->mBase.getSprite()->getGlobalBounds())
-                && packOfEnemies[i].getbullet()->getpresent()) {
+            if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(this->mBase.getSprite()->getGlobalBounds())
+                && enemyTank->getbullet()->getpresent()) {
                 this->mBase.setlife(false);
                 this->gameOver = true;
             }
-            if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(packOfEnemies[i].getSprite()->getGlobalBounds())
+            if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(enemyTank->getSprite()->getGlobalBounds())
                 && this->mPlayer.getbullet()->getpresent()) {
-                packOfEnemies[i].collapse();
+                enemyTank->collapse();
                 this->mPlayer.getbullet()->setpresent(false);
             }
         }
@@ -107,12 +111,12 @@ void Application::render() {
 
     if (this->mPlayer.getbullet()->getpresent()) mWindow.draw((mPlayer.getbullet()->getSprite()));
 
-    for (int i(0); i < 4; ++i) {
-        if (packOfEnemies[i].getbullet()->getpresent())
-            mWindow.draw(packOfEnemies[i].getbullet()->getSprite());
+    for (Enemy* enemyTank : this->packOfEnemies) {
+        if (enemyTank->getbullet()->getpresent())
+            mWindow.draw(enemyTank->getbullet()->getSprite());
 
-        if (packOfEnemies[i].getlife())
-            mWindow.draw(*(packOfEnemies[i].getSprite()));
+        if (enemyTank->getlife())
+            mWindow.draw(*(enemyTank->getSprite()));
     }
 
     if (this->mBase.getlife())

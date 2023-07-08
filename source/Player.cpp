@@ -57,6 +57,7 @@ void Player::move(const sf::Int64 &time) {
 
 void Player::update(const sf::Int64 &time, Map &map, const bool &collision) {
     this->mCollision = collision;
+
     move(time);
 
     this->mSpeed = 0.f;
