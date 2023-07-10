@@ -44,7 +44,7 @@ void Map::break_wall(const int &i, const int &j) {
 void Map::draw(sf::RenderWindow &window) {
     for (int i(0); i < HEIGHT_MAP; i++)
         for (int j(0); j < WIDTH_MAP; j++) {
-            switch (TileMap[i][j]) {
+            switch (this->TileMap[i][j]) {
                 case ' ':
                     mSprite.setTextureRect(sf::IntRect(0, 0, 24, 24));
                     this->TileMapData[i][j] = 1; // 1 denotes passable
@@ -69,6 +69,7 @@ void Map::draw(sf::RenderWindow &window) {
             mSprite.setPosition(j * 24, i * 24);
             window.draw(mSprite);
         }
+    
 }
 
 int Map::getMapDataOnTile(int nRowNo, int nColNo){
@@ -96,3 +97,13 @@ bool Map::getTilePassable(int i, int j){
     return isPassable;
 }
 
+void Map::debug(){
+    for(int i = 0; i < HEIGHT_MAP; i++){
+        for(int j = 0; j < WIDTH_MAP; j++){
+            if(getTilePassable(i,j)) std::cout<<" ";
+            else std::cout<<"█";
+        }
+        std::cout<<std::endl;
+    }
+    std::cout<<std::endl<<std::endl;
+}

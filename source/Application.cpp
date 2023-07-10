@@ -22,9 +22,9 @@ Application::Application()
 
         process_events();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)){
             this->gameStarted = true;
-
+            this->map.debug();}
         while(tLastUpdate > tTimePerFrame){
             tLastUpdate -= tTimePerFrame;
             if (this->gameStarted && !this->gameOver)

@@ -8,6 +8,48 @@ Enemy::Enemy(const float &x, const float &y)
         
 }
 
+void Enemy::smartmove(const sf::Int64 &time, char Dir) {
+    this->mSpeed = 0.1f;
+
+    switch(Dir){
+        case 'E': this->mDir = 0; break;
+        case 'W': this->mDir = 1; break;
+        case 'S': this->mDir = 2; break;
+        case 'N': this->mDir = 3; break;
+        default: this-> mDir = -1;
+    }
+
+    switch (this->mDir) {
+        case 0:
+            this->mDx = this->mSpeed;
+            this->mDy = 0;
+            break;
+
+        case 1:
+            this->mDx = -this->mSpeed;
+            this->mDy = 0;
+            break;
+
+        case 2:
+            this->mDx = 0;
+            this->mDy = this->mSpeed;
+            break;
+
+        case 3:
+            this->mDx = 0;
+            this->mDy = -this->mSpeed;
+            break;
+        default: 
+            this->mDx = 0;
+            this->mDy = 0;
+            break;
+    }
+    
+    if (this->mCollision) tank_interaction();
+    this->mX += this->mDx * time;
+    this->mY += this->mDy * time;
+}
+
 void Enemy::move(const sf::Int64 &time) {
     this->mSpeed = 0.1f;
     this->timeBeforeMoving += time;
@@ -110,6 +152,10 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
         case 3:
             this->mDx = 0;
             this->mDy = -1;
+            break;
+        default: 
+            this->mDx = 0;
+            this->mDy = 0;
             break;
     }
 

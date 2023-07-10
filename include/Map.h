@@ -28,6 +28,8 @@ namespace models{
         void setMapDataOnTile(int nRowNo, int nColNo, int nVal);
         bool getTilePassable(int i, int j);
 
+        void debug();
+
     };
 
 
