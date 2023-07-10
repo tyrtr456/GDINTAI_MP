@@ -85,4 +85,14 @@ void Map::setMapDataOnTile(int nRowNo, int nColNo, int nVal){
 
 }
 
+bool Map::getTilePassable(int i, int j){
+    bool isPassable = true;
+
+    if(this->TileMapData[i][j] != 1) isPassable = false;
+    if(this->TileMapData[i+1][j] != 1) isPassable = false;
+    if(this->TileMapData[i][j+1] != 1) isPassable = false;
+    if(this->TileMapData[i+1][j+1] != 1) isPassable = false;
+        
+    return isPassable;
+}
 

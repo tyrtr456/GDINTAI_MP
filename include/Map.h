@@ -26,7 +26,7 @@ namespace models{
     public:
         int getMapDataOnTile(int nRowNo, int nColNo);
         void setMapDataOnTile(int nRowNo, int nColNo, int nVal);
-        
+        bool getTilePassable(int i, int j);
 
     };
 
