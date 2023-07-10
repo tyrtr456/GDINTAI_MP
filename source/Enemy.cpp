@@ -75,7 +75,7 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
         this->shoot(time);
         if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x)
             this->mDir = 3;
-        if(this->getSprite()->getPosition().x < player.getSprite()->getPosition().x)
+        else if(this->getSprite()->getPosition().x < player.getSprite()->getPosition().x)
             this->mDir = 2;
             
     }
@@ -84,7 +84,7 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
         this->shoot(time);
         if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y)
             this->mDir = 0;
-        if(this->getSprite()->getPosition().y < player.getSprite()->getPosition().y)
+        else if(this->getSprite()->getPosition().y < player.getSprite()->getPosition().y)
             this->mDir = 1;
     }
     else{

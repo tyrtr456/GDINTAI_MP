@@ -29,7 +29,7 @@ void Player::move(const sf::Int64 &time) {
         this->mSpeed = 0.11f;
     }
 
-    switch (mDir) {
+    switch (this->mDir) {
         case 0:
             this->mDx = this->mSpeed;
             this->mDy = 0;
