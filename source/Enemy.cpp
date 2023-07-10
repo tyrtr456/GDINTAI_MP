@@ -70,22 +70,22 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
     this->map_interaction(map);
 
     this->bullet.update(map, time, this->mX, this->mY, this->mDir);
-    if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x - 1 
-       && this->getSprite()->getPosition().x < player.getSprite()->getPosition().x + 1){
+    if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x - 12 
+       && this->getSprite()->getPosition().x < player.getSprite()->getPosition().x + 12){
         this->shoot(time);
-        if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x)
+        if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y)
             this->mDir = 3;
-        else if(this->getSprite()->getPosition().x < player.getSprite()->getPosition().x)
+        else if(this->getSprite()->getPosition().y < player.getSprite()->getPosition().y)
             this->mDir = 2;
             
     }
-    else if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y - 1
-            && this->getSprite()->getPosition().y < player.getSprite()->getPosition().y + 1){
+    else if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y - 12
+            && this->getSprite()->getPosition().y < player.getSprite()->getPosition().y + 12){
         this->shoot(time);
-        if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y)
-            this->mDir = 0;
-        else if(this->getSprite()->getPosition().y < player.getSprite()->getPosition().y)
+        if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x)
             this->mDir = 1;
+        else if(this->getSprite()->getPosition().x < player.getSprite()->getPosition().x)
+            this->mDir = 0;
     }
     else{
         this->move(time);
