@@ -1,39 +1,22 @@
 #include "../include/Enemy.h"
-//#include "Enemy.h"
+
 
 using namespace models;
 
-Enemy::Enemy(const float &x, const float &y)
+Enemy::Enemy(const float &x, const float &y) 
     : Tank(x, y, 39, 39, "media/enemySprites.png"), timeBeforeMoving(0.f), timeBeforeShot(0.f) {
     
     this->NextPos.x = this->mX;
     this->NextPos.y = this->mY;
 
     this->vecMoveSet.push_back('E');
-    this->vecMoveSet.push_back('E');
-    this->vecMoveSet.push_back('E');
-    this->vecMoveSet.push_back('E');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('S');
-    this->vecMoveSet.push_back('E');
-    this->vecMoveSet.push_back('E');
-    this->vecMoveSet.push_back('E');
-    this->vecMoveSet.push_back('E');
+
+    this->pAI = new TankAI(this->mX, this->mY);
     
 }
 
 void Enemy::smartmove(const sf::Int64 &time, char Dir) {
     this->mSpeed = 0.1f;
-
 
     if(this->canChangeDir && !this->vecMoveSet.empty()){
 
@@ -109,9 +92,23 @@ void Enemy::smartmove(const sf::Int64 &time, char Dir) {
 }
 
 
-void Enemy::movePos(const sf::Int64 & time){
+void Enemy::breadthFirstSearch(Map &map, Player &player){
+
+
+    pAI->logMapEdges(map, player);
+    bool bSearch = pAI->searchPath();
+
+    if(bSearch){
+
+        this->vecMoveSet.push_back(pAI->logPath());
+
+    }
+
     
 }
+
+    
+
 
 void Enemy::move(const sf::Int64 &time) {
     this->mSpeed = 0.1f;

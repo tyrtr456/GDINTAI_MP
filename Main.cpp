@@ -1,7 +1,9 @@
 #include "iostream"
 #include "unordered_map"
+#include "unordered_set"
 #include "vector"
 #include "cmath"
+#include "queue"
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Audio.hpp"
@@ -13,7 +15,9 @@
 #include "source/Map.cpp"
 #include "source/Message.cpp"
 #include "source/Player.cpp"
+#include "source/TankAI.cpp"
 #include "source/Tank.cpp"
+
 
 
 int main() {

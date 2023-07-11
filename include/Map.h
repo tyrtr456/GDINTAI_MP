@@ -1,14 +1,13 @@
 #ifndef MODELS_MAP_H
 #define MODELS_MAP_H
 
+#include "Settings.h"
+
 namespace models{
 
     class Map  {
 
     private:
-
-        static const int HEIGHT_MAP = 28;
-        static const int WIDTH_MAP = 30;
 
         sf::String *TileMap;
         int TileMapData[HEIGHT_MAP][WIDTH_MAP];
@@ -27,6 +26,7 @@ namespace models{
         int getMapDataOnTile(int nRowNo, int nColNo);
         void setMapDataOnTile(int nRowNo, int nColNo, int nVal);
         bool getTilePassable(int i, int j);
+
 
         void debug();
 
