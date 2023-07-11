@@ -37,7 +37,7 @@ void TankAI::logMapEdges(Map &map, Tank &player){
 			for(j = 0; j <= this->nColumns; j++){
 	
 				this->vecTemp[i][j] = map.getTilePassable(i, j);
-				std::cout << vecTemp[i][j] << std::endl; 
+				//std::cout << vecTemp[i][j] << std::endl; 
 			}
 
         }
@@ -168,6 +168,6 @@ char TankAI::logPath(){
 				}
     	}
 
-			
-    }
+	return ' ';	
+}
 

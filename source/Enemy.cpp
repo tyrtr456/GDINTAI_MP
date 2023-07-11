@@ -100,7 +100,7 @@ void Enemy::breadthFirstSearch(Map &map, Player &player){
 
     if(bSearch){
 
-        this->vecMoveSet.push_back(pAI->logPath());
+        pAI->logPath();
 
     }
 
@@ -166,7 +166,8 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
     
     char e = ' ';
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-        e = 'E';
+        this->breadthFirstSearch(map, player);
+        //e = 'E';
     
     this->smartmove(time, e);
 
