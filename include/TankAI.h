@@ -27,7 +27,6 @@ namespace models{
 		int nStart;
 		int nTarget;
 		bool bPathFound;
-		char aMapTiles[4]; //0 - wall tile, 1 - floor tile, 2 - enemy tile, 3 - player tile
 
 
 		/*Constructors / function prototypes (I normally dont do function prototypes in this section but since hpp is not allowed I need to jam it here...)*/
@@ -42,7 +41,7 @@ namespace models{
 
 		void logMapEdges(Map &map, Tank &player);
 
-		bool searchPath();
+		void searchPath();
 
 		char logPath();
 

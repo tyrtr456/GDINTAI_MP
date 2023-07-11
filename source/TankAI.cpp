@@ -29,14 +29,28 @@ void TankAI::logMapEdges(Map &map, Tank &player){
     int j;
 
     this->vecTemp.resize(this->nRows);
+	std::cout << "Test" << std::endl; 
 
-		for(i = 0; i <= this->nRows; i++){
+		for(i = 0; i <= this->nRows - 1; i++){
 
 			this->vecTemp[i].resize(this->nColumns);
+			std::cout << "Test" << std::endl; 
 
-			for(j = 0; j <= this->nColumns; j++){
-	
-				this->vecTemp[i][j] = map.getTilePassable(i, j);
+			for(j = 0; j <= this->nColumns - 1; j++){
+
+				if(map.getTilePassable(i, j) == true){
+
+					this->vecTemp[i][j] = 1;
+
+				}
+
+				else {
+
+					this->vecTemp[i][j] = 0;
+
+				}
+
+				std::cout << "Test" << std::endl; 
 				//std::cout << vecTemp[i][j] << std::endl; 
 			}
 
@@ -46,9 +60,9 @@ void TankAI::logMapEdges(Map &map, Tank &player){
         this->nTarget = (this->nColumns * player.getmY()) + player.getmX();
 
         
-			for(i = 0; i < this->nRows; i++) {
+			for(i = 0; i < this->nRows - 1; i++) {
 
-				for(j = 0; j < this->nColumns; j++) {
+				for(j = 0; j < this->nColumns - 1; j++) {
 
 
 					if (j + 1 < this->nColumns && this->vecTemp[i][j] != 0) {
@@ -79,7 +93,7 @@ void TankAI::logMapEdges(Map &map, Tank &player){
 
 }
 		
-bool TankAI::searchPath(){
+void TankAI::searchPath(){
 
     	/*options of the given location, I don't need these two to be attributes of the AI as these two will be updated frequently to fill out the refData attribute, 
 			  which will be the basis for logging.*/
@@ -90,40 +104,34 @@ bool TankAI::searchPath(){
 
     		qOption.push(this->nStart);
     		setCleared.insert(this->nStart);
+ 
 
     		while (!qOption.empty() || this->bPathFound == false) {
  
         		nCurrent = qOption.front();
         		qOption.pop();
 
-				if (nCurrent == this->nTarget) {	// once bPathfound is no longer false, the loop should end.
-				this->bPathFound = true;
+				if (nCurrent == this->nTarget) {
+
+					std::cout << "No crash here" << std::endl;
+
+					// once bPathfound is no longer false, the loop should end.
+					this->bPathFound = true;
 				}
+
 
         		for (int nAdj_vertex : this->mapData[nCurrent]) { //check mapData for connections to push to the queue of options and insert to the sets cleared.
 
             		if (setCleared.find(nAdj_vertex) == setCleared.end()) {
+						
+						std::cout << "No crash here" << std::endl;
                 		qOption.push(nAdj_vertex);
                 		setCleared.insert(nAdj_vertex);
 						this->refData[nAdj_vertex] = nCurrent;
-            		}
 
+            		}
         		}
     		}
-
-			if(this->bPathFound == true){
-
-				std::cout << "Path found, logging" << std::endl;
-
-                return this->bPathFound;
-			}
-
-			else{
-
-				std::cout << "ERROR: Invalid path" << std::endl;
-                return this->bPathFound;
-
-			}
 
 }
 
@@ -135,12 +143,11 @@ char TankAI::logPath(){
 
         while (nCurrentPos != this->nStart) { //chart and insert the values into the route vector
 
-            	this->vecRoute.push_back(nCurrentPos);
-            	nCurrentPos = this->refData[nCurrentPos];
+            this->vecRoute.push_back(nCurrentPos);
+            nCurrentPos = this->refData[nCurrentPos];
 
         }
-
-        	
+  	
 		this->vecRoute.push_back(this->nStart); //finally push back the target position itself
         
         // Logs the path to the target

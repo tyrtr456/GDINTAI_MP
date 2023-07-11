@@ -96,14 +96,16 @@ void Enemy::breadthFirstSearch(Map &map, Player &player){
 
 
     pAI->logMapEdges(map, player);
-    bool bSearch = pAI->searchPath();
 
-    if(bSearch){
+    std::cout << "Test complete, map edges logged" << std::endl;
 
-        pAI->logPath();
+    pAI->searchPath();
 
-    }
+    //if(bSearch){
 
+        //pAI->logPath();
+
+    //}
     
 }
 
