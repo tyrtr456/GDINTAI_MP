@@ -12,9 +12,9 @@ Application::Application()
     sf::Time tTimePerFrame = sf::seconds(1.0f / 60);
 
     this->packOfEnemies.push_back(new Enemy(52,31));
-    this->packOfEnemies.push_back(new Enemy(147,391));
-    this->packOfEnemies.push_back(new Enemy(532,391));
-    this->packOfEnemies.push_back(new Enemy(628,31));
+    //this->packOfEnemies.push_back(new Enemy(147,391));
+    //this->packOfEnemies.push_back(new Enemy(532,391));
+    //this->packOfEnemies.push_back(new Enemy(628,31));
    
     while (this->mWindow.isOpen()) {
         tLastUpdate += clock.restart();
@@ -22,9 +22,9 @@ Application::Application()
 
         process_events();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
             this->gameStarted = true;
-            this->map.debug();}
+
         while(tLastUpdate > tTimePerFrame){
             tLastUpdate -= tTimePerFrame;
             if (this->gameStarted && !this->gameOver)

@@ -5,18 +5,47 @@ using namespace models;
 
 Enemy::Enemy(const float &x, const float &y)
     : Tank(x, y, 39, 39, "media/enemySprites.png"), timeBeforeMoving(0.f), timeBeforeShot(0.f) {
-        
+    
+    this->NextPos.x = this->mX;
+    this->NextPos.y = this->mY;
+
+    this->vecMoveSet.push_back('E');
+    this->vecMoveSet.push_back('E');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
 }
 
 void Enemy::smartmove(const sf::Int64 &time, char Dir) {
     this->mSpeed = 0.1f;
 
-    switch(Dir){
-        case 'E': this->mDir = 0; break;
-        case 'W': this->mDir = 1; break;
-        case 'S': this->mDir = 2; break;
-        case 'N': this->mDir = 3; break;
-        default: this-> mDir = -1;
+
+    if(this->canChangeDir && !this->vecMoveSet.empty()){
+
+        this->canChangeDir = false;
+        switch(this->vecMoveSet.front()){
+            case 'E': 
+                this->mDir = 0;
+                this->NextPos.x = this->mX + 24;
+                break;
+            case 'W': 
+                this->mDir = 1;
+                this->NextPos.x = this->mX - 24;
+                break;
+            case 'S': 
+                this->mDir = 2; 
+                this->NextPos.y = this->mY + 24;
+                break;
+            case 'N':
+                this->mDir = 3;
+                this->NextPos.y = this->mY - 24;
+                break;
+            default: 
+                this->canChangeDir = true;
+                break;
+        }
+        this->vecMoveSet.erase(this->vecMoveSet.begin());
     }
 
     switch (this->mDir) {
@@ -46,8 +75,28 @@ void Enemy::smartmove(const sf::Int64 &time, char Dir) {
     }
     
     if (this->mCollision) tank_interaction();
-    this->mX += this->mDx * time;
-    this->mY += this->mDy * time;
+    
+    switch(this->mDir){
+        case 0:
+            if(this->mX < this->NextPos.x) this->mX += this->mDx * time; 
+            else this->canChangeDir = true; break;
+        case 1:
+            if(this->mX > this->NextPos.x) this->mX += this->mDx * time; 
+            else this->canChangeDir = true; break;
+        case 2:
+            if(this->mY < this->NextPos.y) this->mY += this->mDy * time;
+            else this->canChangeDir = true; break;
+        case 3:
+            if(this->mY > this->NextPos.y) this->mY += this->mDy * time; 
+            else this->canChangeDir = true; break;
+        
+    }
+
+}
+
+
+void Enemy::movePos(const sf::Int64 & time){
+    
 }
 
 void Enemy::move(const sf::Int64 &time) {
@@ -94,7 +143,6 @@ void Enemy::shoot(const float &time) {
         
         if (this->bullet.getpresent() == false)
             if (/*rand() % 2*/1){
-                std::cout<<"Preparing Shot"<<std::endl;
                 this->bullet.setpresent(true);
             }
 
@@ -105,6 +153,11 @@ void Enemy::shoot(const float &time) {
 void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Player &player) {
     this->mCollision = collision;
     
+    char e = ' ';
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+        e = 'E';
+    
+    this->smartmove(time, e);
 
     this->mSpeed = 0.f;
     this->mSprite.setPosition(this->mX, this->mY);
@@ -130,7 +183,7 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
             this->mDir = 0;
     }
     else{
-        this->move(time);
+        //this->move(time);
     }
 
     switch (this->mDir) {
