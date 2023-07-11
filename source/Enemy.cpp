@@ -11,10 +11,24 @@ Enemy::Enemy(const float &x, const float &y)
 
     this->vecMoveSet.push_back('E');
     this->vecMoveSet.push_back('E');
+    this->vecMoveSet.push_back('E');
+    this->vecMoveSet.push_back('E');
     this->vecMoveSet.push_back('S');
     this->vecMoveSet.push_back('S');
     this->vecMoveSet.push_back('S');
     this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('S');
+    this->vecMoveSet.push_back('E');
+    this->vecMoveSet.push_back('E');
+    this->vecMoveSet.push_back('E');
+    this->vecMoveSet.push_back('E');
+    
 }
 
 void Enemy::smartmove(const sf::Int64 &time, char Dir) {
@@ -27,19 +41,19 @@ void Enemy::smartmove(const sf::Int64 &time, char Dir) {
         switch(this->vecMoveSet.front()){
             case 'E': 
                 this->mDir = 0;
-                this->NextPos.x = this->mX + 24;
+                this->NextPos.x = this->mX + 23;
                 break;
             case 'W': 
                 this->mDir = 1;
-                this->NextPos.x = this->mX - 24;
+                this->NextPos.x = this->mX - 23;
                 break;
             case 'S': 
                 this->mDir = 2; 
-                this->NextPos.y = this->mY + 24;
+                this->NextPos.y = this->mY + 23;
                 break;
             case 'N':
                 this->mDir = 3;
-                this->NextPos.y = this->mY - 24;
+                this->NextPos.y = this->mY - 23;
                 break;
             default: 
                 this->canChangeDir = true;
