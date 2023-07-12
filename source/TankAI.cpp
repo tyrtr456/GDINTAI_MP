@@ -139,7 +139,7 @@ char TankAI::logPath(){
 				return 'N';
 			}
 
-			if (this->vecRoute[i] == this->vecRoute[i - 1] + this->nColumns) {	// SOUTH
+			if (this->vecRoute[i] == this->vecRoute[i - 1] - this->nColumns) {	// SOUTH
 
 				return 'S';
 			}
