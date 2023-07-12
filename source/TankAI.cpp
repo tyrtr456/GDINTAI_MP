@@ -115,43 +115,47 @@ char TankAI::logPath(){
 
     int nCurrentPos = 0;
 
-		nCurrentPos = this->nTarget;
+	nCurrentPos = this->nTarget;
+	this->vecRoute.clear();
 
-        while (nCurrentPos != this->nStart) { //chart and insert the values into the route vector
+	while (nCurrentPos != this->nStart) { //chart and insert the values into the route vector
 
-            this->vecRoute.push_back(nCurrentPos);
-            nCurrentPos = this->refData[nCurrentPos];
+		this->vecRoute.push_back(nCurrentPos);
+		nCurrentPos = this->refData[nCurrentPos];
 
-        }
-  	
-		this->vecRoute.push_back(this->nStart); //finally push back the target position itself
-        
-        // Logs the path to the target
+	}
 
-        for (int i = this->vecRoute.size() - 1; i > 0; i--) {
+	this->vecRoute.push_back(this->nStart); //finally push back the target position itself
 
-				if (this->vecRoute[i] == this->vecRoute[i - 1] + this->nColumns) { // NORTH
+	std::cout<<this->vecRoute.size()<<std::endl;
+	std::cout<<std::endl;
+	
+	// Logs the path to the target
 
-					return 'N';
-				}
+	for (int i = this->vecRoute.size() - 1; i > 0; i--) {
 
-				if (this->vecRoute[i] == this->vecRoute[i - 1] + this->nColumns) {	// SOUTH
+			if (this->vecRoute[i] == this->vecRoute[i - 1] + this->nColumns) { // NORTH
 
-					return 'S';
-				}
+				return 'N';
+			}
 
-				if (this->vecRoute[i] == this->vecRoute[i - 1] + 1) {	// WEST
+			if (this->vecRoute[i] == this->vecRoute[i - 1] + this->nColumns) {	// SOUTH
 
-					return 'W';
-				}
+				return 'S';
+			}
 
-				if (this->vecRoute[i] == this->vecRoute[i - 1] - 1) {	// EAST
+			if (this->vecRoute[i] == this->vecRoute[i - 1] + 1) {	// WEST
 
-					return 'E';
-				}
+				return 'W';
+			}
 
-				
-    	}
+			if (this->vecRoute[i] == this->vecRoute[i - 1] - 1) {	// EAST
+
+				return 'E';
+			}
+
+			
+	}
 
 	return ' ';	
 }

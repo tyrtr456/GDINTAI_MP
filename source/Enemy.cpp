@@ -105,8 +105,8 @@ void Enemy::breadthFirstSearch(Map &map, Player &player){
 
     this->nextDir = pAI->logPath();
     
-    std::cout << "GetBFS" << std::endl;
-    std::cout<<this->nextDir<<std::endl;
+    //std::cout << "GetBFS" << std::endl;
+    //std::cout<<this->nextDir<<std::endl;
 }
 
     
