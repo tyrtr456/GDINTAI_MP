@@ -20,6 +20,8 @@ namespace models{
 		std::vector<int> vecRoute; //vector that will be used as a reference point to write onto a file that indicates the route taken by the entity to achieve the target
 		std::vector <std::vector<int>> vecTemp; /*temporary vector to store the map values for edge creation, this was originally not an attribute, but I found it was creating 
 		                              a whole host of errors otherwise....*/
+		std::unordered_map<int, std::vector<int>> nodeMap;
+
 		int selfX;
         int selfY;
         int nRows;
@@ -48,6 +50,7 @@ namespace models{
         int getSelfX();
         int getSelfY();
 
+ 
         void setSelfX(int x);
         void setSelfY(int y);	
 

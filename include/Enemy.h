@@ -15,14 +15,14 @@ namespace models{
         float timeBeforeShot;
 
         bool canChangeDir = true;
+        char nextDir;
 
         std::vector<char> vecMoveSet;
     public:
         Enemy(const float &x, const float &y);
         Enemy(const Enemy &copy) : Enemy(copy.mX, copy.mY){}
 
-        void smartmove(const sf::Int64 &time, char Dir);
-        void setDir(char Dir);
+        void smartmove(const sf::Int64 &time);
         void breadthFirstSearch(Map &map, Player &player);
         void move(const sf::Int64 &time);
         void shoot(const float &time);

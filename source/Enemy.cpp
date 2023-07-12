@@ -12,16 +12,17 @@ Enemy::Enemy(const float &x, const float &y)
     this->vecMoveSet.push_back('E');
 
     this->pAI = new TankAI(this->mX, this->mY);
-    
+
 }
 
-void Enemy::smartmove(const sf::Int64 &time, char Dir) {
+void Enemy::smartmove(const sf::Int64 &time) {
     this->mSpeed = 0.1f;
 
-    if(this->canChangeDir && !this->vecMoveSet.empty()){
+    if(this->canChangeDir){
 
         this->canChangeDir = false;
-        switch(this->vecMoveSet.front()){
+        std::cout<<"check"<<std::endl;
+        switch(this->nextDir){
             case 'E': 
                 this->mDir = 0;
                 this->NextPos.x = this->mX + 23;
@@ -42,7 +43,6 @@ void Enemy::smartmove(const sf::Int64 &time, char Dir) {
                 this->canChangeDir = true;
                 break;
         }
-        this->vecMoveSet.erase(this->vecMoveSet.begin());
     }
 
     switch (this->mDir) {
@@ -94,19 +94,19 @@ void Enemy::smartmove(const sf::Int64 &time, char Dir) {
 
 void Enemy::breadthFirstSearch(Map &map, Player &player){
 
+    pAI->setSelfX(this->mX);
+    pAI->setSelfY(this->mY);
 
     pAI->logMapEdges(map, player);
 
-    std::cout << "Test complete, map edges logged" << std::endl;
+    
 
     pAI->searchPath();
 
-    //if(bSearch){
-
-        //pAI->logPath();
-
-    //}
+    this->nextDir = pAI->logPath();
     
+    std::cout << "GetBFS" << std::endl;
+    std::cout<<this->nextDir<<std::endl;
 }
 
     
@@ -165,13 +165,9 @@ void Enemy::shoot(const float &time) {
 
 void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Player &player) {
     this->mCollision = collision;
+    this->breadthFirstSearch(map, player);
     
-    char e = ' ';
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-        this->breadthFirstSearch(map, player);
-        //e = 'E';
-    
-    this->smartmove(time, e);
+    this->smartmove(time);
 
     this->mSpeed = 0.f;
     this->mSprite.setPosition(this->mX, this->mY);
@@ -182,19 +178,19 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
     if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x - 12 
        && this->getSprite()->getPosition().x < player.getSprite()->getPosition().x + 12){
         this->shoot(time);
-        if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y)
-            this->mDir = 3;
-        else if(this->getSprite()->getPosition().y < player.getSprite()->getPosition().y)
-            this->mDir = 2;
+        // if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y)
+        //     this->mDir = 3;
+        // else if(this->getSprite()->getPosition().y < player.getSprite()->getPosition().y)
+        //     this->mDir = 2;
             
     }
     else if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y - 12
             && this->getSprite()->getPosition().y < player.getSprite()->getPosition().y + 12){
         this->shoot(time);
-        if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x)
-            this->mDir = 1;
-        else if(this->getSprite()->getPosition().x < player.getSprite()->getPosition().x)
-            this->mDir = 0;
+        // if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x)
+        //     this->mDir = 1;
+        // else if(this->getSprite()->getPosition().x < player.getSprite()->getPosition().x)
+        //     this->mDir = 0;
     }
     else{
         //this->move(time);

@@ -1,4 +1,5 @@
 #include "../include/TankAI.h"
+//#include "TankAI.h"
 
 using namespace models;
 
@@ -11,86 +12,65 @@ TankAI::TankAI(int tankX, int tankY){
 	this->nColumns = WIDTH_MAP;
 				
 	this->bPathFound = false;
+
+
+	
 }
 
 
 void TankAI::logEdges(int nVertex, int nAdj_vertex){
 
-    std::cout << "Logging map edges" << std::endl;
-
     this->mapData[nVertex].push_back(nAdj_vertex);
     this->mapData[nAdj_vertex].push_back(nVertex);
+
 
 }
 
 void TankAI::logMapEdges(Map &map, Tank &player){
 
-    int i;
-    int j;
+	int matNodes[HEIGHT_MAP][WIDTH_MAP];
+	int nIndex = 0;
+    for(int i = 0; i < HEIGHT_MAP; i++){
+		for(int j = 0; j < WIDTH_MAP; j++){
+			matNodes[i][j] = nIndex;
+			nIndex++;
+		}
+	}
 
-    this->vecTemp.resize(this->nRows);
-	std::cout << "Test" << std::endl; 
+	this->nStart = matNodes[this->selfY/24][this->selfX/24];
+	this->nTarget = matNodes[(int)player.getmY()/24][(int)player.getmX()/24];
 
-		for(i = 0; i <= this->nRows - 1; i++){
+	//std::cout<< this->nStart << " " << this->nTarget;
 
-			this->vecTemp[i].resize(this->nColumns);
-			std::cout << "Test" << std::endl; 
+	nIndex = 0;
+	for(int i = 0; i < HEIGHT_MAP; i++){
+		for(int j = 0; j < WIDTH_MAP; j++){
+			
+			std::vector<int> temp;
 
-			for(j = 0; j <= this->nColumns - 1; j++){
-
-				if(map.getTilePassable(i, j) == true){
-
-					this->vecTemp[i][j] = 1;
-
-				}
-
-				else {
-
-					this->vecTemp[i][j] = 0;
-
-				}
-
-				std::cout << "Test" << std::endl; 
-				//std::cout << vecTemp[i][j] << std::endl; 
+			if(map.getTilePassable(i+1,j) && i+1 != HEIGHT_MAP){//checks tile below
+				temp.push_back(matNodes[i+1][j]);
+			}
+			if(map.getTilePassable(i-1,j) && i-1 != -1){//checks tile above
+				temp.push_back(matNodes[i-1][j]);
+			}
+			if(map.getTilePassable(i,j+1) && j+1 != WIDTH_MAP){//checks tile to right
+				temp.push_back(matNodes[i][j+1]);
+			}
+			if(map.getTilePassable(i,j-1) && j-1 != -1){//checks tile below
+				temp.push_back(matNodes[i][j-1]);
 			}
 
-        }
+			this->nodeMap[nIndex] = temp;
 
-        this->nStart = (this->nColumns * this->selfY) + this->selfX;
-        this->nTarget = (this->nColumns * player.getmY()) + player.getmX();
+			nIndex++;
+		}
+	}
 
-        
-			for(i = 0; i < this->nRows - 1; i++) {
-
-				for(j = 0; j < this->nColumns - 1; j++) {
-
-
-					if (j + 1 < this->nColumns && this->vecTemp[i][j] != 0) {
-
-						if(this->vecTemp[i][j + 1] != 0){
-
-							this->logEdges((this->nColumns*i)+j, (this->nColumns*i)+j+1);
-							this->logEdges((this->nColumns*i)+j + 1, (this->nColumns*i)+j);
-							
-
-						} 
-						
-					}
-
-					if (i + 1 < this->nRows && this->vecTemp[i][j] != 0) {
-
-						if(this->vecTemp[i + 1][j] != 0){
-
-							this->logEdges((this->nColumns*i)+j, (this->nColumns*(i+1))+j);
-							this->logEdges((this->nColumns*(i+1))+j, (this->nColumns*i)+j);
-							
-
-						}
-					}
-
-				}	
-			}
-
+	for(int intev : this->nodeMap[62]){
+		//std::cout<<intev<<" ";
+	}
+	std::cout<<std::endl;
 }
 		
 void TankAI::searchPath(){
@@ -112,19 +92,15 @@ void TankAI::searchPath(){
         		qOption.pop();
 
 				if (nCurrent == this->nTarget) {
-
-					std::cout << "No crash here" << std::endl;
-
 					// once bPathfound is no longer false, the loop should end.
 					this->bPathFound = true;
 				}
 
 
-        		for (int nAdj_vertex : this->mapData[nCurrent]) { //check mapData for connections to push to the queue of options and insert to the sets cleared.
+        		for (int nAdj_vertex : this->nodeMap[nCurrent]) { //check mapData for connections to push to the queue of options and insert to the sets cleared.
 
             		if (setCleared.find(nAdj_vertex) == setCleared.end()) {
 						
-						std::cout << "No crash here" << std::endl;
                 		qOption.push(nAdj_vertex);
                 		setCleared.insert(nAdj_vertex);
 						this->refData[nAdj_vertex] = nCurrent;
@@ -159,22 +135,33 @@ char TankAI::logPath(){
 					return 'N';
 				}
 
-				else if (this->vecRoute[i] == this->vecRoute[i - 1] + 1) {	// WEST
+				if (this->vecRoute[i] == this->vecRoute[i - 1] + this->nColumns) {	// SOUTH
+
+					return 'S';
+				}
+
+				if (this->vecRoute[i] == this->vecRoute[i - 1] + 1) {	// WEST
 
 					return 'W';
 				}
 
-				else if (this->vecRoute[i] == this->vecRoute[i - 1] - 1) {	// EAST
+				if (this->vecRoute[i] == this->vecRoute[i - 1] - 1) {	// EAST
 
 					return 'E';
 				}
 
-				else if (this->vecRoute[i] == this->vecRoute[i - 1] + this->nColumns) {	// SOUTH
-
-					return 'S';
-				}
+				
     	}
 
 	return ' ';	
 }
 
+void models::TankAI::setSelfX(int x)
+{
+	this->selfX = x;
+}
+
+void models::TankAI::setSelfY(int y)
+{
+	this->selfY = y;
+}
