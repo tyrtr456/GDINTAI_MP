@@ -21,7 +21,6 @@ void Enemy::smartmove(const sf::Int64 &time) {
     if(this->canChangeDir){
 
         this->canChangeDir = false;
-        std::cout<<"check"<<std::endl;
         switch(this->nextDir){
             case 'E': 
                 this->mDir = 0;
@@ -175,8 +174,8 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
     this->map_interaction(map);
 
     this->bullet.update(map, time, this->mX, this->mY, this->mDir);
-    if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x - 12 
-       && this->getSprite()->getPosition().x < player.getSprite()->getPosition().x + 12){
+    if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x - 16 
+       && this->getSprite()->getPosition().x < player.getSprite()->getPosition().x + 16){
         this->shoot(time);
         // if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y)
         //     this->mDir = 3;
@@ -184,8 +183,8 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
         //     this->mDir = 2;
             
     }
-    else if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y - 12
-            && this->getSprite()->getPosition().y < player.getSprite()->getPosition().y + 12){
+    else if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y - 16
+            && this->getSprite()->getPosition().y < player.getSprite()->getPosition().y + 16){
         this->shoot(time);
         // if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x)
         //     this->mDir = 1;

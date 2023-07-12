@@ -70,7 +70,7 @@ void TankAI::logMapEdges(Map &map, Tank &player){
 	for(int intev : this->nodeMap[62]){
 		//std::cout<<intev<<" ";
 	}
-	std::cout<<std::endl;
+	//std::cout<<std::endl;
 }
 		
 void TankAI::searchPath(){
@@ -127,8 +127,8 @@ char TankAI::logPath(){
 
 	this->vecRoute.push_back(this->nStart); //finally push back the target position itself
 
-	std::cout<<this->vecRoute.size()<<std::endl;
-	std::cout<<std::endl;
+	//std::cout<<this->vecRoute.size()<<std::endl;
+	//std::cout<<std::endl;
 	
 	// Logs the path to the target
 
