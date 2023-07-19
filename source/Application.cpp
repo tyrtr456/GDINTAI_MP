@@ -11,10 +11,14 @@ Application::Application()
     sf::Time tLastUpdate = sf::Time::Zero;
     sf::Time tTimePerFrame = sf::seconds(1.0f / 60);
 
+    this->vecBases.push_back(new Base(336, 600));
+    this->vecBases.push_back(new Base(610, 600));
+    this->vecBases.push_back(new Base(336, 470));
+
     this->packOfEnemies.push_back(new Enemy(52,31));
-    //this->packOfEnemies.push_back(new Enemy(147,391));
-    //this->packOfEnemies.push_back(new Enemy(532,391));
-    //this->packOfEnemies.push_back(new Enemy(628,31));
+    this->packOfEnemies.push_back(new Enemy(147,391));
+    this->packOfEnemies.push_back(new Enemy(532,391));
+    this->packOfEnemies.push_back(new Enemy(628,31));
    
     while (this->mWindow.isOpen()) {
         tLastUpdate += clock.restart();
@@ -71,36 +75,53 @@ void Application::update(const sf::Int64 &time) {
     }
 
 
-    if (this->mPlayer.getlife())
+    if (this->mPlayer.getlife()){
+
         this->mPlayer.update(time, map, collision);
 
+    }
+
     for (Enemy* enemyTank : this->packOfEnemies) {
+
         if (enemyTank->getlife()) {
             enemyTank->update(time, map, collision, this->mPlayer);
-
-            if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(this->mPlayer.getSprite()->getGlobalBounds())
+        }
+            
+            if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(this->mPlayer.getSprite()->getGlobalBounds()) 
                 && enemyTank->getbullet()->getpresent()) {
                 this->mPlayer.collapse();
                 enemyTank->getbullet()->setpresent(false);
             }
 
-            if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(this->mBase.getSprite()->getGlobalBounds())
-                && enemyTank->getbullet()->getpresent()) {
-                this->mBase.setlife(false);
-                this->gameOver = true;
-            }
             if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(enemyTank->getSprite()->getGlobalBounds())
                 && this->mPlayer.getbullet()->getpresent()) {
                 enemyTank->collapse();
                 this->mPlayer.getbullet()->setpresent(false);
             }
-        }
-    }
 
-    if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(this->mBase.getSprite()->getGlobalBounds())
+              for (Base* pBase : this->vecBases) {
+
+                if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
+                && enemyTank->getbullet()->getpresent()) {
+                pBase->setlife(false);
+                this->gameOver = true;
+
+                }
+
+            }
+    }
+    
+
+    for(Base* pBase : this->vecBases) {
+
+        if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
         && this->mPlayer.getbullet()->getpresent()) {
-        this->mBase.setlife(false);
+
+        pBase->setlife(false);
         this->gameOver = true;
+
+        }
+
     }
 }
 
@@ -120,19 +141,32 @@ void Application::render() {
             mWindow.draw(*(enemyTank->getSprite()));
     }
 
-    if (this->mBase.getlife())
-        this->mWindow.draw(*(this->mBase.getSprite()));
+    for(Base* pBase : this->vecBases){
+
+        if (pBase->getlife()){
+
+            this->mWindow.draw(*(pBase->getSprite()));
+
+        }
+    }
+
 
     if (!gameStarted)
         this->msgStart.print(mWindow);
 
     if (this->gameOver) {
         this->msgOver.print(mWindow);
-        if (!this->mBase.getlife() || !this->mPlayer.getlife())
+        if (!this->mPlayer.getlife()){
 
             this->msgLost.print(mWindow);
-        else
+
+        }
+        else{
+
             this->msgWon.print(mWindow);
+
+        }
+            
     }
 
     this->mWindow.display();

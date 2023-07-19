@@ -10,7 +10,7 @@ namespace models{
         bool life;
 
     public:
-        Base();
+        Base(int posX, int posY);
 
     public:
         sf::Texture getTexture();

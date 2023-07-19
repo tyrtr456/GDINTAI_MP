@@ -21,7 +21,7 @@ namespace controllers{
         int frags;
 
         sf::RenderWindow mWindow;
-        Base mBase;
+        std::vector<Base*> vecBases;
         Map map;
         Player mPlayer;
         std::vector<Enemy*> packOfEnemies;
