@@ -1,15 +1,19 @@
 #include "../include/Application.h"
+#include "sstream"
+#include "iomanip"
 
 using namespace controllers;
 
 Application::Application()
     : mWindow(sf::VideoMode(720, 672), "Battle City"), gameOver(false), gameStarted(false),
-    msgStart(90, 330, "Press \'Enter\' to start"), msgOver(250, 300, "Game over"),
-    msgLost(260, 350, "You lost"), msgWon(265, 350, "You won"), frags(0) {
+    msgStart(90, 330, 25,"Press \'Enter\' to start"), msgOver(250, 300, 25, "Game over"),
+    msgLost(260, 350, 25, "You lost"), msgWon(265, 350,25, "You won"), msgTimer(10,10,17, "Time: "),frags(0) {
 
     sf::Clock clock = sf::Clock();
     sf::Time tLastUpdate = sf::Time::Zero;
     sf::Time tTimePerFrame = sf::seconds(1.0f / 60);
+
+    this->nTimer = 10;
 
     this->vecBases.push_back(new Base(336, 600));
     this->vecBases.push_back(new Base(610, 600));
@@ -17,12 +21,14 @@ Application::Application()
 
     this->packOfEnemies.push_back(new Enemy(52,31));
     this->packOfEnemies.push_back(new Enemy(147,391));
-    this->packOfEnemies.push_back(new Enemy(532,391));
-    this->packOfEnemies.push_back(new Enemy(628,31));
+    // this->packOfEnemies.push_back(new Enemy(532,391));
+    // this->packOfEnemies.push_back(new Enemy(628,31));
    
     while (this->mWindow.isOpen()) {
+        std::ostringstream timeSec;
+        timeSec << std::setw(2) << std::setfill('0') << std::to_string((int)this->nTimer % 60);
+        this->msgTimer.setText("Time " + std::to_string((int)this->nTimer / 60) + ":" + timeSec.str());
         tLastUpdate += clock.restart();
-
 
         process_events();
 
@@ -31,8 +37,10 @@ Application::Application()
 
         while(tLastUpdate > tTimePerFrame){
             tLastUpdate -= tTimePerFrame;
-            if (this->gameStarted && !this->gameOver)
-                update(tTimePerFrame.asMilliseconds());
+            
+            if (this->gameStarted && !this->gameOver){
+                this->nTimer -= tTimePerFrame.asSeconds();  
+                update(tTimePerFrame.asMilliseconds());}
         }
         render();
     }
@@ -64,6 +72,8 @@ void Application::update(const sf::Int64 &time) {
     if (!this->mPlayer.getlife())
         this->gameOver = true;
 
+    if(this->nTimer <= 0)
+        this->gameOver = true;
     bool collision;
 
     for (Enemy* enemyTank : this->packOfEnemies) {
@@ -153,7 +163,8 @@ void Application::render() {
 
     if (!gameStarted)
         this->msgStart.print(mWindow);
-
+    else
+        this->msgTimer.print(mWindow);
     if (this->gameOver) {
         this->msgOver.print(mWindow);
         if (!this->mPlayer.getlife()){

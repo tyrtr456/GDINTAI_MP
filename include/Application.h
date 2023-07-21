@@ -26,10 +26,15 @@ namespace controllers{
         Player mPlayer;
         std::vector<Enemy*> packOfEnemies;
 
+
+
         Message msgStart;
         Message msgOver;
         Message msgLost;
         Message msgWon;
+
+        Message msgTimer;
+        float nTimer;
 
     public:
         Application();

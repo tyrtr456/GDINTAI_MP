@@ -13,9 +13,10 @@ namespace models{
     sf::Text mStr;
 
     public:
-    Message(const float &x, const float &y, const sf::String &str);
+    Message(const float &x, const float &y, int nSize, const sf::String &str);
 
     void print(sf::RenderWindow &window) { window.draw(mStr); }
+    void setText(sf::String mStr){this->mStr.setString(mStr);}
 };
 
 
