@@ -9,7 +9,7 @@ Enemy::Enemy(const float &x, const float &y)
     this->NextPos.x = this->mX;
     this->NextPos.y = this->mY;
 
-    this->vecMoveSet.push_back('E');
+    this->EType = ENEMY_TANK;
 
     this->pAI = new TankAI(this->mX, this->mY);
 

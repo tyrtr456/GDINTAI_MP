@@ -13,7 +13,7 @@ Application::Application()
     sf::Time tLastUpdate = sf::Time::Zero;
     sf::Time tTimePerFrame = sf::seconds(1.0f / 60);
 
-    this->nTimer = 10;
+    this->nTimer = 60;
 
     this->vecBases.push_back(new Base(336, 600));
     this->vecBases.push_back(new Base(610, 600));
@@ -74,6 +74,16 @@ void Application::update(const sf::Int64 &time) {
 
     if(this->nTimer <= 0)
         this->gameOver = true;
+
+    int nTime = this->nTimer;
+
+    if(nTime % 15 == 0){
+
+        this->vecPickups.push_back(new Powerup(400, 600, SPEED_UP));
+
+
+    }
+    
     bool collision;
 
     for (Enemy* enemyTank : this->packOfEnemies) {
@@ -158,6 +168,12 @@ void Application::render() {
             this->mWindow.draw(*(pBase->getSprite()));
 
         }
+    }
+
+     for(Powerup* pPowerup : this->vecPickups){
+
+        this->mWindow.draw(*(pPowerup->getSprite()));
+
     }
 
 

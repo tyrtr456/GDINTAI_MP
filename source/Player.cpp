@@ -5,6 +5,8 @@ using namespace models;
 
 Player::Player()
     : Tank(244, 600, 39, 39, "media/playerSprites.png") {
+        
+        this->EType = PLAYER_TANK;
 
 }
 

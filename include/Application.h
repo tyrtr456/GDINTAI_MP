@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Base.h"
+#include "Powerup.h"
 #include "Message.h"
 
 #include "vector"
@@ -22,6 +23,7 @@ namespace controllers{
 
         sf::RenderWindow mWindow;
         std::vector<Base*> vecBases;
+        std::vector<Powerup*> vecPickups;
         Map map;
         Player mPlayer;
         std::vector<Enemy*> packOfEnemies;

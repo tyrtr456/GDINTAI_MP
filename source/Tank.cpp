@@ -139,4 +139,16 @@ Bullet* Tank::getbullet(){
 
 }
 
+TankType Tank::getType(){
+
+    return this->EType;
+
+}
+
+void Tank::setSpeed(float fVal){
+
+    this->mSpeed = fVal;
+
+}
+
 

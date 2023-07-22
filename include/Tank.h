@@ -2,6 +2,8 @@
 #define MODELS_TANK_H
 
 #include "Bullet.h"
+#include "../enum/EnumTankType.h"
+
 
 namespace models{
 
@@ -17,6 +19,7 @@ namespace models{
             sf::Texture mTexture;
             sf::Sprite mSprite;
             Bullet bullet;
+            TankType EType;
 
         public:
             Tank(const float &x, const float &y, const float &width, const float &height, const sf::String &file);
@@ -42,6 +45,8 @@ namespace models{
             bool getlife();
             sf::Sprite* getSprite();
             Bullet* getbullet();
+            TankType getType();
+            void setSpeed(float fVal);
 
             
     };

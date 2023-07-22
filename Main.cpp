@@ -17,6 +17,7 @@
 #include "source/Player.cpp"
 #include "source/TankAI.cpp"
 #include "source/Tank.cpp"
+#include "source/Powerup.cpp"
 
 
 
