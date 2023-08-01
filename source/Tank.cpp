@@ -12,6 +12,8 @@ Tank::Tank(const float &x, const float &y, const float &width, const float &heig
     this->mSprite.setTexture(mTexture);
     this->mSprite.setTextureRect(sf::IntRect(78, 39, mWidth, mHeight));
     this->mSprite.setPosition(x, y);
+
+    this->fSpeedMulti = 1.0f;
 }
 
 void Tank::animate(const sf::Int64 &time) {
@@ -106,6 +108,11 @@ float Tank::getSpeed()
     return this->mSpeed;
 }
 
+float Tank::getSpeedMultiplier(){
+
+    return this->fSpeedMulti;
+}
+
 int Tank::getDir()
 {
     return this->mDir;
@@ -151,4 +158,7 @@ void Tank::setSpeed(float fVal){
 
 }
 
+void Tank::setSpeedMultiplier(float fVal){
 
+    this->fSpeedMulti = fVal;
+}

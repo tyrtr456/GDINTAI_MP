@@ -10,7 +10,7 @@ namespace models{
     class Tank   {
 
         protected:
-            float mX, mY, mWidth, mHeight, mDx, mDy, mSpeed;
+            float mX, mY, mWidth, mHeight, mDx, mDy, mSpeed, fSpeedMulti;
             int mDir;
             float mCurrentFrame;
             bool mCollision;
@@ -39,6 +39,7 @@ namespace models{
             float getmDx();
             float getmDy();
             float getSpeed();
+            float getSpeedMultiplier();
             int getDir();
             float getCurrentFrame();
             bool getCollision();
@@ -47,6 +48,7 @@ namespace models{
             Bullet* getbullet();
             TankType getType();
             void setSpeed(float fVal);
+            void setSpeedMultiplier(float fVal);
 
             
     };

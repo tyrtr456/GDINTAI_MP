@@ -12,6 +12,7 @@ namespace models{
         sf::Texture mTexture;
         sf::Sprite mSprite;
         PowerType EType;
+        bool bActive;
         
 
     public:
@@ -20,13 +21,15 @@ namespace models{
     public:
         sf::Texture getTexture();
         sf::Sprite* getSprite();
-        
+        bool isActive();
+        void collapse();
 
     public:
         void setTexture(sf::Texture* pTexture);
         void setSprite(sf::Sprite* pSprite);
         void effect(Tank* pTank);
-        
+    
+    
 
 
     };

@@ -15,12 +15,15 @@ Application::Application()
 
     this->nTimer = 60;
 
-    this->vecBases.push_back(new Base(336, 600));
-    this->vecBases.push_back(new Base(610, 600));
-    this->vecBases.push_back(new Base(336, 470));
+    this->vecBases.push_back(new Base(336, 600, PLAYER));
+    this->vecBases.push_back(new Base(610, 600, PLAYER));
+    this->vecBases.push_back(new Base(336, 470, PLAYER));
 
-    this->packOfEnemies.push_back(new Enemy(52,31));
-    this->packOfEnemies.push_back(new Enemy(147,391));
+    this->enemyBases.push_back(new Base(14 * 24, 5 * 24, ENEMY));
+  
+
+    //this->packOfEnemies.push_back(new Enemy(52,31));
+    //this->packOfEnemies.push_back(new Enemy(147,391));
     // this->packOfEnemies.push_back(new Enemy(532,391));
     // this->packOfEnemies.push_back(new Enemy(628,31));
    
@@ -79,7 +82,7 @@ void Application::update(const sf::Int64 &time) {
 
     if(nTime % 15 == 0){
 
-        this->vecPickups.push_back(new Powerup(400, 600, SPEED_UP));
+        this->vecPickups.push_back(new Powerup(3 * 24, 2 * 24, SPEED_UP));
 
 
     }
@@ -92,6 +95,14 @@ void Application::update(const sf::Int64 &time) {
             this->mPlayer.collapse();
             //std::cout<<"Collision Detected"<<std::endl;
             
+    }
+
+    for (Powerup* powerup : this->vecPickups){
+
+        collision = this->mPlayer.getSprite()->getGlobalBounds().intersects(powerup->getSprite()->getGlobalBounds());
+        if (collision)
+            powerup->effect(&mPlayer);
+
     }
 
 
@@ -119,7 +130,17 @@ void Application::update(const sf::Int64 &time) {
                 this->mPlayer.getbullet()->setpresent(false);
             }
 
-              for (Base* pBase : this->vecBases) {
+            for (Powerup* powerup : this->vecPickups){
+
+                if(enemyTank->getSprite()->getGlobalBounds().intersects(powerup->getSprite()->getGlobalBounds())){
+
+                    powerup->effect(enemyTank);
+                }
+                    
+
+            }
+
+            for (Base* pBase : this->vecBases) {
 
                 if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
                 && enemyTank->getbullet()->getpresent()) {
@@ -129,6 +150,19 @@ void Application::update(const sf::Int64 &time) {
                 }
 
             }
+
+            for(Base* pBase : this->enemyBases) {
+
+                if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
+                && this->mPlayer.getbullet()->getpresent()) {
+
+                 pBase->setlife(false);
+            
+
+                }
+
+            }
+
     }
     
 
@@ -141,6 +175,29 @@ void Application::update(const sf::Int64 &time) {
         this->gameOver = true;
 
         }
+
+    }
+
+    for(Base* pBase : this->enemyBases) {
+
+        if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
+        && this->mPlayer.getbullet()->getpresent()) {
+
+        pBase->setlife(false);
+
+        }
+
+    }
+
+    if(nTime % 5 == 0){
+
+        this->mPlayer.setSpeedMultiplier(1.0f);
+
+        for (Enemy* enemyTank : this->packOfEnemies) {
+
+            enemyTank->setSpeedMultiplier(1.0f);
+        }
+
 
     }
 }
@@ -170,12 +227,26 @@ void Application::render() {
         }
     }
 
-     for(Powerup* pPowerup : this->vecPickups){
+    for(Base* pEBase : this->enemyBases){
 
-        this->mWindow.draw(*(pPowerup->getSprite()));
+        if (pEBase->getlife()){
 
+            this->mWindow.draw(*(pEBase->getSprite()));
+
+        }
     }
 
+     for(Powerup* pPowerup : this->vecPickups){
+
+        if(pPowerup->isActive()){
+
+            this->mWindow.draw(*(pPowerup->getSprite()));
+
+        }
+
+        
+
+    }
 
     if (!gameStarted)
         this->msgStart.print(mWindow);

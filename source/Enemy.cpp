@@ -46,23 +46,23 @@ void Enemy::smartmove(const sf::Int64 &time) {
 
     switch (this->mDir) {
         case 0:
-            this->mDx = this->mSpeed;
+            this->mDx = this->mSpeed * this->fSpeedMulti;
             this->mDy = 0;
             break;
 
         case 1:
-            this->mDx = -this->mSpeed;
+            this->mDx = -this->mSpeed * this->fSpeedMulti;
             this->mDy = 0;
             break;
 
         case 2:
             this->mDx = 0;
-            this->mDy = this->mSpeed;
+            this->mDy = this->mSpeed * this->fSpeedMulti;
             break;
 
         case 3:
             this->mDx = 0;
-            this->mDy = -this->mSpeed;
+            this->mDy = -this->mSpeed * this->fSpeedMulti;
             break;
         default: 
             this->mDx = 0;

@@ -23,6 +23,7 @@ namespace controllers{
 
         sf::RenderWindow mWindow;
         std::vector<Base*> vecBases;
+        std::vector<Base*> enemyBases;
         std::vector<Powerup*> vecPickups;
         Map map;
         Player mPlayer;

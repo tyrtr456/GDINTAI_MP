@@ -7,28 +7,32 @@ Player::Player()
     : Tank(244, 600, 39, 39, "media/playerSprites.png") {
         
         this->EType = PLAYER_TANK;
+        
 
 }
 
 void Player::move(const sf::Int64 &time) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+
         this->mDir = 1;
-        this->mSpeed = 0.11f;
+        this->mSpeed = 0.11f * this->fSpeedMulti;
+        
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         this->mDir = 0;
-        this->mSpeed = 0.11f;
+        this->mSpeed = 0.11f * this->fSpeedMulti;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         this->mDir = 3;
-        this->mSpeed = 0.11f;
+         this->mSpeed = 0.11f * this->fSpeedMulti;
+        
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        this->mDir = 2;
-        this->mSpeed = 0.11f;
+        this->mDir = 2; 
+        this->mSpeed = 0.11f * this->fSpeedMulti;  
     }
 
     switch (this->mDir) {
@@ -62,7 +66,7 @@ void Player::update(const sf::Int64 &time, Map &map, const bool &collision) {
 
     move(time);
 
-    this->mSpeed = 0.f;
+    this->mSpeed = 0.0f;
     this->mSprite.setPosition(mX, mY);
     animate(time);
     map_interaction(map);

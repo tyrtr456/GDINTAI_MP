@@ -6,10 +6,36 @@ Powerup::Powerup(int posX, int posY, PowerType EType) {
 
     this->EType = EType;
 
-    this->mTexture.loadFromFile("media/powerupSprite.png");
+    this->bActive = true;
+
+    if(this->EType == SPEED_UP){
+
+        this->mTexture.loadFromFile("media/powerupSprite.png");
+
+    }
+
+    else if(this->EType == MINE){
+
+         this->mTexture.loadFromFile("media/mineSprite.png");
+
+    }
+
+    else if(this->EType == SPEED_DOWN){
+
+         this->mTexture.loadFromFile("media/powerdownSprite.png");
+
+    }
+    
     this->mSprite.setTexture(mTexture);
-    this->mSprite.setTextureRect(sf::IntRect(0, 0, 48, 48));
+    mSprite.setTextureRect(sf::IntRect(0, 0, 9, 12));
     this->mSprite.setPosition(posX, posY);
+}
+
+void Powerup::collapse(){
+
+    this->bActive = false;
+    this->mSprite.setPosition(0, 0);
+
 }
 
  sf::Sprite* Powerup::getSprite(){
@@ -17,6 +43,11 @@ Powerup::Powerup(int posX, int posY, PowerType EType) {
     return &(this->mSprite);
  }
 
+bool Powerup::isActive(){
+
+    return this->bActive;
+
+}
 
  void Powerup::setTexture(sf::Texture *pTexture)
  {
@@ -33,15 +64,18 @@ Powerup::Powerup(int posX, int posY, PowerType EType) {
     switch(this->EType){
 
         case PowerType::SPEED_UP:
-            pTank->setSpeed(pTank->getSpeed() * 2.0);
+            pTank->setSpeedMultiplier(2.0);
+            this->collapse();
             break;
 
         case PowerType::SPEED_DOWN:
-            pTank->setSpeed(pTank->getSpeed() / 2.0);
+            pTank->setSpeedMultiplier(0.5);
+            this->collapse();
             break;
 
         case PowerType::MINE:
             pTank->collapse();
+            this->collapse();
             break;
 
         case PowerType::CHAOS:
