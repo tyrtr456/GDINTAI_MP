@@ -22,27 +22,31 @@ Base::Base(int posX, int posY, BaseType EType) {
     this->mSprite.setPosition(posX, posY);
 }
 
- sf::Sprite* Base::getSprite(){
+sf::Sprite* Base::getSprite(){
 
-    return &(this->mSprite);
- }
+   return &(this->mSprite);
+}
 
- bool Base::getlife()
- {
-    return this->life;
- }
+bool Base::getlife()
+{
+   return this->life;
+}
 
- void Base::setTexture(sf::Texture *pTexture)
- {
-    this->mTexture = *pTexture;
- }
+void Base::setTexture(sf::Texture *pTexture)
+{
+   this->mTexture = *pTexture;
+}
 
- void Base::setSprite(sf::Sprite *pSprite)
- {
-    this->mSprite = *pSprite;
- }
+void Base::setSprite(sf::Sprite *pSprite)
+{
+   this->mSprite = *pSprite;
+}
 
- void Base::setlife(bool life)
- {
-    this->life = life;
- }
+void Base::setlife(bool life)
+{
+   this->life = life;
+}
+
+void Base::setPos(int x, int y){
+this->mSprite.setPosition(x, y);
+}

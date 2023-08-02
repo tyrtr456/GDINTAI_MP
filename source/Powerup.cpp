@@ -2,7 +2,12 @@
 
 using namespace models;
 
-Powerup::Powerup(int posX, int posY, PowerType EType) {
+Powerup::Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases, PowerType EType) {
+    srand(time(NULL));
+
+    this->pMap = pMap;
+    this->vecBases = vecBases;
+    this->vecEnemyBases = vecEnemyBases;
 
     this->EType = EType;
 
@@ -79,16 +84,14 @@ bool Powerup::isActive(){
             break;
 
         case PowerType::CHAOS:
-            if(pTank->getType() == ENEMY_TANK){
-
-
+            for(Base* pBase : this->vecBases){
+                pBase->setPos(((rand() % (WIDTH_MAP - 4)) + 2) * 24, ((rand() % (HEIGHT_MAP - 2)) + 1) * 24);
             }
 
-            else if (pTank->getType() == PLAYER_TANK){
-
-
+            for(Base* pBase : this->vecEnemyBases){
+                pBase->setPos(((rand() % (WIDTH_MAP - 4)) + 2) * 24, ((rand() % (HEIGHT_MAP - 2)) + 1) * 24);
             }
-
+            this->collapse();
             break;
           
     }

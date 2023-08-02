@@ -24,6 +24,7 @@ namespace models{
         void setTexture(sf::Texture* pTexture);
         void setSprite(sf::Sprite* pSprite);
         void setlife(bool life);
+        void setPos(int x, int y);
 
 
     };

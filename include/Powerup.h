@@ -3,12 +3,21 @@
 
 #include "Base.h"
 #include "Tank.h"
+#include "Map.h"
+#include "Settings.h"
 #include "../enum/EnumPowerType.h"    
+#include "cstdlib"
 
 namespace models{
 
     class Powerup {
     private:
+
+        Map *pMap;
+
+        std::vector<Base*> vecBases;
+        std::vector<Base*> vecEnemyBases;
+
         sf::Texture mTexture;
         sf::Sprite mSprite;
         PowerType EType;
@@ -16,7 +25,7 @@ namespace models{
         
 
     public:
-        Powerup(int posX, int posY, PowerType EType);
+        Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases,PowerType EType);
 
     public:
         sf::Texture getTexture();

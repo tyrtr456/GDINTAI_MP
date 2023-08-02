@@ -18,8 +18,10 @@ Application::Application()
     this->vecBases.push_back(new Base(336, 600, PLAYER));
     this->vecBases.push_back(new Base(610, 600, PLAYER));
     this->vecBases.push_back(new Base(336, 470, PLAYER));
+    this->baseCount = 3;
 
     this->enemyBases.push_back(new Base(14 * 24, 5 * 24, ENEMY));
+    this->enemyBaseCount = 1;
   
 
     //this->packOfEnemies.push_back(new Enemy(52,31));
@@ -82,7 +84,7 @@ void Application::update(const sf::Int64 &time) {
 
     if(nTime % 15 == 0){
 
-        this->vecPickups.push_back(new Powerup(3 * 24, 2 * 24, SPEED_UP));
+        this->vecPickups.push_back(new Powerup(3 * 24, 2 * 24, &this->map, this->vecBases, this->enemyBases, CHAOS));
 
 
     }
@@ -144,8 +146,12 @@ void Application::update(const sf::Int64 &time) {
 
                 if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
                 && enemyTank->getbullet()->getpresent()) {
-                pBase->setlife(false);
-                this->gameOver = true;
+                    if(pBase->getlife()){
+                        pBase->setlife(false);
+                        this->baseCount--;
+                    }
+                    if(this->baseCount == 0)
+                        this->gameOver = true;
 
                 }
 
@@ -155,10 +161,12 @@ void Application::update(const sf::Int64 &time) {
 
                 if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
                 && this->mPlayer.getbullet()->getpresent()) {
-
-                 pBase->setlife(false);
-            
-
+                    if(pBase->getlife()){
+                        pBase->setlife(false);
+                        this->enemyBaseCount--;
+                    }
+                    if(this->enemyBaseCount == 0)
+                        this->gameOver = true;
                 }
 
             }
@@ -170,10 +178,12 @@ void Application::update(const sf::Int64 &time) {
 
         if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
         && this->mPlayer.getbullet()->getpresent()) {
-
-        pBase->setlife(false);
-        this->gameOver = true;
-
+            if(pBase->getlife()){
+                pBase->setlife(false);
+                this->baseCount--;
+            }
+            if(this->baseCount == 0)
+                this->gameOver = true;
         }
 
     }
@@ -182,9 +192,12 @@ void Application::update(const sf::Int64 &time) {
 
         if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
         && this->mPlayer.getbullet()->getpresent()) {
-
-        pBase->setlife(false);
-
+            if(pBase->getlife()){
+                pBase->setlife(false);
+                this->enemyBaseCount--;
+            }
+            if(this->enemyBaseCount == 0)
+                this->gameOver = true;
         }
 
     }
@@ -254,7 +267,7 @@ void Application::render() {
         this->msgTimer.print(mWindow);
     if (this->gameOver) {
         this->msgOver.print(mWindow);
-        if (!this->mPlayer.getlife()){
+        if (!this->mPlayer.getlife() || this->baseCount == 0 || this->baseCount < this->enemyBaseCount){
 
             this->msgLost.print(mWindow);
 
