@@ -5,7 +5,7 @@
 using namespace controllers;
 
 Application::Application()
-    : mWindow(sf::VideoMode(720, 672), "Battle City"), gameOver(false), gameStarted(false),
+    : mWindow(sf::VideoMode(720, 672), "Battle City"), gameOver(false), gameStarted(false), map(PLAINS),
     msgStart(90, 330, 25,"Press \'Enter\' to start"), msgOver(250, 300, 25, "Game over"),
     msgLost(260, 350, 25, "You lost"), msgWon(265, 350,25, "You won"), msgTimer(10,10,17, "Time: "),frags(0) {
 
@@ -24,7 +24,7 @@ Application::Application()
     this->enemyBaseCount = 1;
   
 
-    //this->packOfEnemies.push_back(new Enemy(52,31));
+    this->packOfEnemies.push_back(new Enemy(52,31));
     //this->packOfEnemies.push_back(new Enemy(147,391));
     // this->packOfEnemies.push_back(new Enemy(532,391));
     // this->packOfEnemies.push_back(new Enemy(628,31));
