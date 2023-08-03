@@ -5,8 +5,8 @@
 using namespace controllers;
 
 Application::Application()
-    : mWindow(sf::VideoMode(720, 672), "Battle City"), gameOver(false), gameStarted(false), map(PLAINS),
-    msgStart(90, 330, 25,"Press \'Enter\' to start"), msgOver(250, 300, 25, "Game over"),
+    : mWindow(sf::VideoMode(720, 672), "Battle City"), gameOver(false), gameStarted(false), map(NONE),
+    msgStart(90, 330, 25,"Select A level [1,2,3]"), msgOver(250, 300, 25, "Game over"),
     msgLost(260, 350, 25, "You lost"), msgWon(265, 350,25, "You won"), msgTimer(10,10,17, "Time: "),frags(0) {
 
     sf::Clock clock = sf::Clock();
@@ -15,16 +15,11 @@ Application::Application()
 
     this->nTimer = 60;
 
-    this->vecBases.push_back(new Base(336, 600, PLAYER));
-    this->vecBases.push_back(new Base(610, 600, PLAYER));
-    this->vecBases.push_back(new Base(336, 470, PLAYER));
-    this->baseCount = 3;
 
-    this->enemyBases.push_back(new Base(14 * 24, 5 * 24, ENEMY));
-    this->enemyBaseCount = 1;
+    
   
 
-    this->packOfEnemies.push_back(new Enemy(52,31));
+    
     //this->packOfEnemies.push_back(new Enemy(147,391));
     // this->packOfEnemies.push_back(new Enemy(532,391));
     // this->packOfEnemies.push_back(new Enemy(628,31));
@@ -35,18 +30,72 @@ Application::Application()
         this->msgTimer.setText("Time " + std::to_string((int)this->nTimer / 60) + ":" + timeSec.str());
         tLastUpdate += clock.restart();
 
+
+
         process_events();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-            this->gameStarted = true;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) && !this->gameStarted){
+            this->map.setMap((MapType)0);
+
+            this->vecBases.push_back(new Base(14*24, 25*24, PLAYER));
+            this->vecBases.push_back(new Base(6*24, 22*24, PLAYER));
+            this->vecBases.push_back(new Base(22*24, 22*24, PLAYER));
+            this->baseCount = 3;
+
+            this->enemyBases.push_back(new Base(14 * 24, 5 * 24, ENEMY));
+            this->enemyBases.push_back(new Base(6 * 24, 4 * 24, ENEMY));
+            this->enemyBases.push_back(new Base(22 * 24, 4 * 24, ENEMY));
+            this->enemyBaseCount = 3;
+
+            this->packOfEnemies.push_back(new Enemy(14 * 24.3, 5 * 24.3));
+
+            this->gameStarted = true;}
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) && !this->gameStarted){
+            this->map.setMap((MapType)1);
+
+            this->vecBases.push_back(new Base(14*24, 25*24, PLAYER));
+            this->vecBases.push_back(new Base(26*24, 16*24, PLAYER));
+            this->vecBases.push_back(new Base(22*24, 22*24, PLAYER));
+            this->baseCount = 3;
+
+            this->enemyBases.push_back(new Base(14 * 24, 5 * 24, ENEMY));
+            this->enemyBases.push_back(new Base(2 * 24, 3 * 24, ENEMY));
+            this->enemyBases.push_back(new Base(22 * 24, 4 * 24, ENEMY));
+            this->enemyBaseCount = 3;
+
+            this->packOfEnemies.push_back(new Enemy(14 * 24.3, 5 * 24.3));
+            
+            this->gameStarted = true;}
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) && !this->gameStarted){
+            this->map.setMap((MapType)2);
+
+            this->vecBases.push_back(new Base(15*24, 25*24, PLAYER));
+            this->vecBases.push_back(new Base(6*24, 22*24, PLAYER));
+            this->vecBases.push_back(new Base(25*24, 25*24, PLAYER));
+            this->baseCount = 3;
+
+            this->enemyBases.push_back(new Base(14 * 24, 3 * 24, ENEMY));
+            this->enemyBases.push_back(new Base(4 * 24, 5 * 24, ENEMY));
+            this->enemyBases.push_back(new Base(20 * 24, 5 * 24, ENEMY));
+            this->enemyBaseCount = 3;
+
+            this->packOfEnemies.push_back(new Enemy(14 * 24.3, 3 * 24.3));
+
+            this->gameStarted = true;}
 
         while(tLastUpdate > tTimePerFrame){
             tLastUpdate -= tTimePerFrame;
             
             if (this->gameStarted && !this->gameOver){
                 this->nTimer -= tTimePerFrame.asSeconds();  
-                update(tTimePerFrame.asMilliseconds());}
+                update(tTimePerFrame.asMilliseconds());
+                
+            }
+            else{
+                
+            }
         }
+        
         render();
     }
 }
@@ -217,54 +266,57 @@ void Application::update(const sf::Int64 &time) {
 
 void Application::render() {
     this->mWindow.clear();
-    this->map.draw(this->mWindow);
-    if (this->mPlayer.getlife())
-        this->mWindow.draw(*(this->mPlayer.getSprite()));
-
-    if (this->mPlayer.getbullet()->getpresent()) mWindow.draw((mPlayer.getbullet()->getSprite()));
-
-    for (Enemy* enemyTank : this->packOfEnemies) {
-        if (enemyTank->getbullet()->getpresent())
-            mWindow.draw(enemyTank->getbullet()->getSprite());
-
-        if (enemyTank->getlife())
-            mWindow.draw(*(enemyTank->getSprite()));
-    }
-
-    for(Base* pBase : this->vecBases){
-
-        if (pBase->getlife()){
-
-            this->mWindow.draw(*(pBase->getSprite()));
-
-        }
-    }
-
-    for(Base* pEBase : this->enemyBases){
-
-        if (pEBase->getlife()){
-
-            this->mWindow.draw(*(pEBase->getSprite()));
-
-        }
-    }
-
-     for(Powerup* pPowerup : this->vecPickups){
-
-        if(pPowerup->isActive()){
-
-            this->mWindow.draw(*(pPowerup->getSprite()));
-
-        }
-
-        
-
-    }
+    
 
     if (!gameStarted)
         this->msgStart.print(mWindow);
-    else
+    else{
         this->msgTimer.print(mWindow);
+
+            this->map.draw(this->mWindow);
+        if (this->mPlayer.getlife())
+            this->mWindow.draw(*(this->mPlayer.getSprite()));
+
+        if (this->mPlayer.getbullet()->getpresent()) mWindow.draw((mPlayer.getbullet()->getSprite()));
+
+        for (Enemy* enemyTank : this->packOfEnemies) {
+            if (enemyTank->getbullet()->getpresent())
+                mWindow.draw(enemyTank->getbullet()->getSprite());
+
+            if (enemyTank->getlife())
+                mWindow.draw(*(enemyTank->getSprite()));
+        }
+
+        for(Base* pBase : this->vecBases){
+
+            if (pBase->getlife()){
+
+                this->mWindow.draw(*(pBase->getSprite()));
+
+            }
+        }
+
+        for(Base* pEBase : this->enemyBases){
+
+            if (pEBase->getlife()){
+
+                this->mWindow.draw(*(pEBase->getSprite()));
+
+            }
+        }
+
+        for(Powerup* pPowerup : this->vecPickups){
+
+            if(pPowerup->isActive()){
+
+                this->mWindow.draw(*(pPowerup->getSprite()));
+
+            }
+
+            
+
+        }
+    }
     if (this->gameOver) {
         this->msgOver.print(mWindow);
         if (!this->mPlayer.getlife() || this->baseCount == 0 || this->baseCount < this->enemyBaseCount){

@@ -29,6 +29,7 @@ namespace models{
         void setMapDataOnTile(int nRowNo, int nColNo, int nVal);
         bool getTilePassable(int i, int j);
         MapType getMapType();
+        void setMap(MapType Etype);
 
         void debug();
 
