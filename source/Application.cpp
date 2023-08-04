@@ -302,8 +302,6 @@ void Application::render() {
 
         }
         this->msgTimer.print(mWindow);
-
-        this->msgTimer.print(mWindow);
     }
     if (this->gameOver) {
         this->msgOver.print(mWindow);
