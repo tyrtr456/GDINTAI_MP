@@ -26,7 +26,7 @@ void TankAI::logEdges(int nVertex, int nAdj_vertex){
 
 }
 
-void TankAI::logMapEdges(Map &map, Tank &player){
+void TankAI::logMapEdges(Map &map, sf::Vector2f vecPos){
 
 	int matNodes[HEIGHT_MAP][WIDTH_MAP];
 	int nIndex = 0;
@@ -38,9 +38,9 @@ void TankAI::logMapEdges(Map &map, Tank &player){
 	}
 
 	this->nStart = matNodes[this->selfY/24][this->selfX/24];
-	this->nTarget = matNodes[(int)player.getmY()/24][(int)player.getmX()/24];
+	this->nTarget = matNodes[(int)vecPos.y/24][(int)vecPos.x/24];
 
-	//std::cout<< this->nStart << " " << this->nTarget;
+	//std::cout<< (int)player.getmY()/24 << " "<< (int)player.getmX()/24<<std::endl;
 
 	nIndex = 0;
 	for(int i = 0; i < HEIGHT_MAP; i++){

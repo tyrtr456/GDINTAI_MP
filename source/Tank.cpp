@@ -1,5 +1,4 @@
 #include "../include/Tank.h"
-//#include "Tank.h"
 
 using namespace models;
 
@@ -133,6 +132,10 @@ bool Tank::getlife()
     return this->life;
 }
 
+void Tank::setLife(bool bSet)
+{
+    this->life = bSet;
+}
 sf::Sprite* Tank::getSprite(){
 
     
@@ -158,6 +161,11 @@ void Tank::setSpeed(float fVal){
 
 }
 
+void Tank::setPos(sf::Vector2f vecPos)
+{
+    this->mX = vecPos.x;
+    this->mY = vecPos.y;
+}
 void Tank::setSpeedMultiplier(float fVal){
 
     this->fSpeedMulti = fVal;

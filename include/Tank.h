@@ -44,10 +44,12 @@ namespace models{
             float getCurrentFrame();
             bool getCollision();
             bool getlife();
+            void setLife(bool bSet);
             sf::Sprite* getSprite();
             Bullet* getbullet();
             TankType getType();
             void setSpeed(float fVal);
+            void setPos(sf::Vector2f vecPos);
             void setSpeedMultiplier(float fVal);
 
             

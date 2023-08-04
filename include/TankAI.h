@@ -41,7 +41,7 @@ namespace models{
 
         void logEdges(int nVertex, int nAdj_vertex);
 
-		void logMapEdges(Map &map, Tank &player);
+		void logMapEdges(Map &map, sf::Vector2f vecPos);
 
 		void searchPath();
 

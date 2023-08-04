@@ -120,11 +120,24 @@ void Application::update(const sf::Int64 &time) {
             break;
         }
 
-    if (this->frags == 4)
-        this->gameOver = true;
+    if (!this->mPlayer.getlife() && (int)this->nTimer % 5 == 0){
+        for(Base *pBase : this->vecBases){
+            if(pBase->getlife()){
+                this->mPlayer.setPos(pBase->getPos());
+            }
+        }
+        this->mPlayer.setLife(true);
+        
+    }
 
-    if (!this->mPlayer.getlife())
-        this->gameOver = true;
+    if (!this->packOfEnemies[0]->getlife() && (int)this->nTimer % 5 == 0){
+        for(Base *pBase : this->enemyBases){
+            if(pBase->getlife()){
+                this->packOfEnemies[0]->setPos(sf::Vector2f(pBase->getPos().x + 4.5f , pBase->getPos().y + 3));
+            }
+        }
+        this->packOfEnemies[0]->setLife(true);
+    }
 
     if(this->nTimer <= 0)
         this->gameOver = true;
@@ -166,7 +179,10 @@ void Application::update(const sf::Int64 &time) {
     for (Enemy* enemyTank : this->packOfEnemies) {
 
         if (enemyTank->getlife()) {
-            enemyTank->update(time, map, collision, this->mPlayer);
+            enemyTank->update(time, map, collision, this->mPlayer, this->vecBases, this->enemyBases);
+        }
+        else{
+            enemyTank->resetEnemy();
         }
             
             if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(this->mPlayer.getSprite()->getGlobalBounds()) 
@@ -193,8 +209,7 @@ void Application::update(const sf::Int64 &time) {
 
             for (Base* pBase : this->vecBases) {
 
-                if (enemyTank->getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
-                && enemyTank->getbullet()->getpresent()) {
+                if (enemyTank->getSprite()->getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())) {
                     if(pBase->getlife()){
                         pBase->setlife(false);
                         this->baseCount--;
@@ -205,42 +220,12 @@ void Application::update(const sf::Int64 &time) {
                 }
 
             }
-
-            for(Base* pBase : this->enemyBases) {
-
-                if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
-                && this->mPlayer.getbullet()->getpresent()) {
-                    if(pBase->getlife()){
-                        pBase->setlife(false);
-                        this->enemyBaseCount--;
-                    }
-                    if(this->enemyBaseCount == 0)
-                        this->gameOver = true;
-                }
-
-            }
-
     }
     
 
-    for(Base* pBase : this->vecBases) {
-
-        if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
-        && this->mPlayer.getbullet()->getpresent()) {
-            if(pBase->getlife()){
-                pBase->setlife(false);
-                this->baseCount--;
-            }
-            if(this->baseCount == 0)
-                this->gameOver = true;
-        }
-
-    }
-
     for(Base* pBase : this->enemyBases) {
 
-        if (this->mPlayer.getbullet()->getSprite().getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())
-        && this->mPlayer.getbullet()->getpresent()) {
+        if (this->mPlayer.getSprite()->getGlobalBounds().intersects(pBase->getSprite()->getGlobalBounds())) {
             if(pBase->getlife()){
                 pBase->setlife(false);
                 this->enemyBaseCount--;
@@ -271,7 +256,7 @@ void Application::render() {
     if (!gameStarted)
         this->msgStart.print(mWindow);
     else{
-        this->msgTimer.print(mWindow);
+        
 
             this->map.draw(this->mWindow);
         if (this->mPlayer.getlife())
@@ -316,6 +301,7 @@ void Application::render() {
             
 
         }
+        this->msgTimer.print(mWindow);
     }
     if (this->gameOver) {
         this->msgOver.print(mWindow);

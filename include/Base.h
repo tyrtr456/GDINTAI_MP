@@ -11,6 +11,7 @@ namespace models{
         sf::Sprite mSprite;
         BaseType EType;
         bool life;
+        sf::Vector2f vecPos;
 
     public:
         Base(int posX, int posY, BaseType EType);
@@ -25,6 +26,7 @@ namespace models{
         void setSprite(sf::Sprite* pSprite);
         void setlife(bool life);
         void setPos(int x, int y);
+        sf::Vector2f getPos();
 
 
     };

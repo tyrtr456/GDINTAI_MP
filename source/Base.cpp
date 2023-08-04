@@ -1,9 +1,10 @@
 #include "../include/Base.h"
-//#include "Base.h"
+
 
 using namespace models;
 
 Base::Base(int posX, int posY, BaseType EType) {
+   this->vecPos = sf::Vector2f(posX, posY);
 
     this->life = true;
 
@@ -49,4 +50,8 @@ void Base::setlife(bool life)
 
 void Base::setPos(int x, int y){
 this->mSprite.setPosition(x, y);
+}
+sf::Vector2f Base::getPos()
+{
+   return this->vecPos;
 }

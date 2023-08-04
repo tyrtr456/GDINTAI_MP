@@ -6,12 +6,14 @@ using namespace models;
 Enemy::Enemy(const float &x, const float &y) 
     : Tank(x, y, 39, 39, "media/enemySprites.png"), timeBeforeMoving(0.f), timeBeforeShot(0.f) {
     
+    this->pAI = new TankAI(this->mX, this->mY);
+
     this->NextPos.x = this->mX;
     this->NextPos.y = this->mY;
 
     this->EType = ENEMY_TANK;
 
-    this->pAI = new TankAI(this->mX, this->mY);
+    
 
 }
 
@@ -91,12 +93,11 @@ void Enemy::smartmove(const sf::Int64 &time) {
 }
 
 
-void Enemy::breadthFirstSearch(Map &map, Player &player){
+void Enemy::breadthFirstSearch(Map &map, sf::Vector2f vecPos){
 
-    pAI->setSelfX(this->mX);
-    pAI->setSelfY(this->mY);
+    
 
-    pAI->logMapEdges(map, player);
+    pAI->logMapEdges(map, vecPos);
 
     
 
@@ -162,11 +163,37 @@ void Enemy::shoot(const float &time) {
     }
 }
 
-void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Player &player) {
+void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Player &player, std::vector<Base*> vecBase, std::vector<Base*> vecEnemyBase) {
     this->mCollision = collision;
-    this->breadthFirstSearch(map, player);
-    
+
+
+    pAI->setSelfX(this->mX);
+    pAI->setSelfY(this->mY);
+
+    float xTarget;
+    float yTarget;
+
+    if(player.getlife()){
+        xTarget = player.getmX();
+        yTarget = player.getmY();
+    }
+    else if(!vecBase.empty()){
+        for(Base * pBase : vecBase){
+            if(pBase->getlife()){
+                xTarget = pBase->getPos().x;
+                yTarget = pBase->getPos().y;
+            }
+        }
+    }
+
+    this->breadthFirstSearch(map, sf::Vector2f(xTarget, yTarget));
+
     this->smartmove(time);
+
+
+    
+
+    
 
     this->mSpeed = 0.f;
     this->mSprite.setPosition(this->mX, this->mY);
@@ -174,22 +201,18 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
     this->map_interaction(map);
 
     this->bullet.update(map, time, this->mX, this->mY, this->mDir);
+
+    if(this->mCollision) this->shoot(time);
+
     if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x - 16 
        && this->getSprite()->getPosition().x < player.getSprite()->getPosition().x + 16){
         this->shoot(time);
-        // if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y)
-        //     this->mDir = 3;
-        // else if(this->getSprite()->getPosition().y < player.getSprite()->getPosition().y)
-        //     this->mDir = 2;
-            
+        
     }
     else if(this->getSprite()->getPosition().y > player.getSprite()->getPosition().y - 16
             && this->getSprite()->getPosition().y < player.getSprite()->getPosition().y + 16){
         this->shoot(time);
-        // if(this->getSprite()->getPosition().x > player.getSprite()->getPosition().x)
-        //     this->mDir = 1;
-        // else if(this->getSprite()->getPosition().x < player.getSprite()->getPosition().x)
-        //     this->mDir = 0;
+        
     }
     else{
         //this->move(time);
@@ -223,6 +246,14 @@ void Enemy::update(const sf::Int64 &time, Map &map, const bool &collision, Playe
 
     this->animate(time);
     
+}
+
+void Enemy::resetEnemy(){
+    this->NextPos.x = this->mX;
+    this->NextPos.y = this->mY;
+    this->canChangeDir = true;
+    this->mDir = -1;
+    this->nextDir = ' ';
 }
 
 

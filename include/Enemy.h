@@ -2,6 +2,7 @@
 #define MODELS_ENEMY_H
 
 #include "../include/TankAI.h"
+#include "../include/Base.h"
 #include "Settings.h"
 
 namespace models{
@@ -23,10 +24,11 @@ namespace models{
         Enemy(const Enemy &copy) : Enemy(copy.mX, copy.mY){}
 
         void smartmove(const sf::Int64 &time);
-        void breadthFirstSearch(Map &map, Player &player);
+        void breadthFirstSearch(Map &map, sf::Vector2f vecPos);
         void move(const sf::Int64 &time);
         void shoot(const float &time);
-        void update(const sf::Int64 &time, Map &map, const bool &collision, Player &player);
+        void update(const sf::Int64 &time, Map &map, const bool &collision, Player &player, std::vector<Base*> vecBase, std::vector<Base*> vecEnemyBase);
+        void resetEnemy();
 
     public:
         float getBeforeMoving();
