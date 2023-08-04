@@ -256,7 +256,7 @@ void Application::render() {
     if (!gameStarted)
         this->msgStart.print(mWindow);
     else{
-        
+        this->msgTimer.print(mWindow);
 
             this->map.draw(this->mWindow);
         if (this->mPlayer.getlife())
@@ -301,6 +301,8 @@ void Application::render() {
             
 
         }
+        this->msgTimer.print(mWindow);
+
         this->msgTimer.print(mWindow);
     }
     if (this->gameOver) {
