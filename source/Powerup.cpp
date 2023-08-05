@@ -85,11 +85,32 @@ bool Powerup::isActive(){
 
         case PowerType::CHAOS:
             for(Base* pBase : this->vecBases){
-                pBase->setPos(((rand() % (WIDTH_MAP - 4)) + 2) * 24, ((rand() % (HEIGHT_MAP - 2)) + 1) * 24);
+                bool passCheck = false;
+                float x, y;
+                
+                while (!passCheck){
+                    x = (rand() % (WIDTH_MAP));
+                    y = (rand() % (HEIGHT_MAP));
+                    if(this->pMap->getTilePassable(y,x)){
+                        passCheck = true;
+                    }
+                    
+                }
+                pBase->setPos(x * 24, y * 24);
             }
 
             for(Base* pBase : this->vecEnemyBases){
-                pBase->setPos(((rand() % (WIDTH_MAP - 4)) + 2) * 24, ((rand() % (HEIGHT_MAP - 2)) + 1) * 24);
+                bool passCheck = false;
+                float x, y;
+                while (!passCheck){
+                    x = ((rand() % (WIDTH_MAP - 4)) + 2);
+                    y = ((rand() % (HEIGHT_MAP - 2)) + 1);
+                    if(this->pMap->getTilePassable(y,x)){
+                        passCheck = true;
+                    }
+                    
+                }
+                pBase->setPos(x * 24, y * 24);
             }
             this->collapse();
             break;
