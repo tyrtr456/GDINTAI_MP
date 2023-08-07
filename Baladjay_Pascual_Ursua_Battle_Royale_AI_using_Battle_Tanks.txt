@@ -1,0 +1,27 @@
+Battle Royale AI using Battle Tanks
+By
+Baladjay, Julian
+Pascual, Uriel
+Ursua, Ben
+ 
+
+Features:
+Three maps with varying environments  
+Destructible Environments 
+Enemy Tank AI using BFS  
+Powerups 
+
+The game is based on the NES game, Battle City where the players hunt down enemy tanks while avoiding enemy tanks and protect the player base. The NES game also features destructible environments where the player or enemy can take advantage of to sneak in an ambush. However, the focus of this machine project is to enhance the enemy AI using Breadth First Search and to fully understand the learnings in GDINTAI. The game has three levels where it has different placement of environments and the AI takes advantage of it to dynamically traverse the map with new pathways to attack the player and the player base. The game uses C++ and SFML to take advantage of its libraries to create a game that can use sprites that represent the player, the enemy, the bases, and the environment around them. The game proper has a one-minute timer to destroy the enemy base. If the enemy bases are all destroyed, the player wins. The player can also win if the timer runs out but the remaining player base is greater than the enemy base. The enemy AI uses Breadth First Search to locate the player and delay them at destroying the enemy bases. BFS and the combination of the AI's ability to shoot when the player is spotted, the enemy AI may successfully delay the player depending on the player's ability or the environments it takes advantage of. 
+
+Controls:
+Arrow Keys - To move the player tank.
+Space Bar - To fire tank shells. 
+1, 2, 3 - To choose the levels. 
+
+Levels:
+1. Spread - named as such as it is a relatively large map with a spread out environment, which encourages play that involves holding corners and baiting enemies into advantageous positions.
+2. Fortress - a tighter map than Spread, which can hinder player movement and focuses on the players ability to chart a path by carving their own path through the environment, strategic players will form their own plays in this map.
+3. Plains - the most open of the three maps, promoting the players ability to dodge projectiles and position on the fly. 
+
+Executing the game:
+Either run the Main.exe or Main.bat to start the game proper. 
