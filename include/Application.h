@@ -19,6 +19,7 @@ namespace controllers{
     private:
         bool gameOver;
         bool gameStarted;
+        bool canSpawnPowerup;
         int frags;
 
         sf::RenderWindow mWindow;
@@ -30,7 +31,7 @@ namespace controllers{
         Map map;
         Player mPlayer;
         std::vector<Enemy*> packOfEnemies;
-
+        
 
 
         Message msgStart;

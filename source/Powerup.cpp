@@ -2,14 +2,14 @@
 
 using namespace models;
 
-Powerup::Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases, PowerType EType) {
+Powerup::Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases) {
     srand(time(NULL));
 
     this->pMap = pMap;
     this->vecBases = vecBases;
     this->vecEnemyBases = vecEnemyBases;
 
-    this->EType = EType;
+    this->EType = (PowerType)(rand() % 4);
 
     this->bActive = true;
 
@@ -30,6 +30,8 @@ Powerup::Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std
          this->mTexture.loadFromFile("media/powerdownSprite.png");
 
     }
+
+    
     
     this->mSprite.setTexture(mTexture);
     mSprite.setTextureRect(sf::IntRect(0, 0, 9, 12));

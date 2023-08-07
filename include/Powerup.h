@@ -25,7 +25,7 @@ namespace models{
         
 
     public:
-        Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases,PowerType EType);
+        Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases);
 
     public:
         sf::Texture getTexture();

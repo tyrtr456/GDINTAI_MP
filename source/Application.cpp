@@ -144,12 +144,23 @@ void Application::update(const sf::Int64 &time) {
 
     int nTime = this->nTimer;
 
-    if(nTime % 15 == 0){
-
-        this->vecPickups.push_back(new Powerup(3 * 24, 2 * 24, &this->map, this->vecBases, this->enemyBases, CHAOS));
-
+    if(nTime % 15 == 0 && this->canSpawnPowerup){
+        bool passCheck = false;
+                float x, y;
+                
+                while (!passCheck){
+                    x = (rand() % (WIDTH_MAP));
+                    y = (rand() % (HEIGHT_MAP));
+                    if(this->map.getTilePassable(y,x)){
+                        passCheck = true;
+                    }
+                    
+                }
+        this->vecPickups.push_back(new Powerup(x * 24, y * 24, &this->map, this->vecBases, this->enemyBases));
+        this->canSpawnPowerup = false;
 
     }
+    else{this->canSpawnPowerup = true;}
     
     bool collision;
 
