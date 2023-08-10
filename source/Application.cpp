@@ -154,7 +154,7 @@ void Application::update(const sf::Int64 &time) {
 
         if(passCheck == true){
 
-            this->vecPickups.push_back(new Powerup(x * 24, y * 24, &this->map, this->vecBases, this->enemyBases));
+            this->vecPickups.push_back(new Powerup(x * 24, y * 24, &this->map)); //,this->vecBases, //this->enemyBases));
             this->canSpawnPowerup = false;
 
         }
@@ -162,7 +162,7 @@ void Application::update(const sf::Int64 &time) {
 
     }
     else{
-        
+
         this->canSpawnPowerup = true;
         
     }
@@ -181,7 +181,7 @@ void Application::update(const sf::Int64 &time) {
 
         collision = this->mPlayer.getSprite()->getGlobalBounds().intersects(powerup->getSprite()->getGlobalBounds());
         if (collision)
-            powerup->effect(&mPlayer);
+            powerup->effect(&mPlayer, this->vecBases, this->enemyBases);
 
     }
 
@@ -217,7 +217,7 @@ void Application::update(const sf::Int64 &time) {
 
                 if(enemyTank->getSprite()->getGlobalBounds().intersects(powerup->getSprite()->getGlobalBounds())){
 
-                    powerup->effect(enemyTank);
+                    powerup->effect(enemyTank, this->vecBases, this->enemyBases);
                 }
                     
 

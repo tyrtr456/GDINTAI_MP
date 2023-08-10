@@ -2,12 +2,11 @@
 
 using namespace models;
 
-Powerup::Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases) {
+Powerup::Powerup(int posX, int posY, Map *pMap) {
     srand(time(NULL));
 
     this->pMap = pMap;
-    this->vecBases = vecBases;
-    this->vecEnemyBases = vecEnemyBases;
+
 
     this->EType = (PowerType)(rand() % 4);
 
@@ -73,7 +72,7 @@ bool Powerup::isActive(){
     this->mSprite = *pSprite;
  }
  
- void Powerup::effect(Tank* pTank){
+ void Powerup::effect(Tank* pTank, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases){
 
     switch(this->EType){
 
@@ -93,7 +92,7 @@ bool Powerup::isActive(){
             break;
 
         case PowerType::CHAOS:
-            for(Base* pBase : this->vecBases){
+            for(Base* pBase : vecBases){
                 bool passCheck = false;
                 float x, y;
                 
@@ -105,6 +104,7 @@ bool Powerup::isActive(){
                     }
                     
                 }
+                
                 if(passCheck == true){
 
                     pBase->setPos(x * 24, y * 24);
@@ -112,7 +112,7 @@ bool Powerup::isActive(){
                 }
             }
 
-            for(Base* pBase : this->vecEnemyBases){
+            for(Base* pBase : vecEnemyBases){
                 bool passCheck = false;
                 float x, y;
                 while (passCheck != true){

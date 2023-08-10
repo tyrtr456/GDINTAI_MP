@@ -14,10 +14,6 @@ namespace models{
     private:
 
         Map *pMap;
-
-        std::vector<Base*> vecBases;
-        std::vector<Base*> vecEnemyBases;
-
         sf::Texture mTexture;
         sf::Sprite mSprite;
         PowerType EType;
@@ -25,7 +21,7 @@ namespace models{
         
 
     public:
-        Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases);
+        Powerup(int posX, int posY, Map *pMap);
 
     public:
         sf::Texture getTexture();
@@ -36,7 +32,7 @@ namespace models{
     public:
         void setTexture(sf::Texture* pTexture);
         void setSprite(sf::Sprite* pSprite);
-        void effect(Tank* pTank);
+        void effect(Tank* pTank, std::vector<Base*> vecBases, std::vector<Base*> vecEnemyBases);
     
     
 
