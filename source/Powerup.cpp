@@ -87,7 +87,7 @@ bool Powerup::isActive(){
             break;
 
         case PowerType::MINE:
-            pTank->collapse();
+            pTank->setLife(false);
             this->collapse();
             break;
 
@@ -104,7 +104,7 @@ bool Powerup::isActive(){
                     }
                     
                 }
-                
+
                 if(passCheck == true){
 
                     pBase->setPos(x * 24, y * 24);

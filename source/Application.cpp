@@ -118,7 +118,7 @@ void Application::update(const sf::Int64 &time) {
     if (!this->mPlayer.getlife() && (int)this->nTimer % 5 == 0){
         for(Base *pBase : this->vecBases){
             if(pBase->getlife()){
-                this->mPlayer.setPos(pBase->getPos());
+                this->mPlayer.setPos(sf::Vector2f(pBase->getPos().x, pBase->getPos().y));
             }
         }
         this->mPlayer.setLife(true);
