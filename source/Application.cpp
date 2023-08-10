@@ -143,7 +143,7 @@ void Application::update(const sf::Int64 &time) {
         bool passCheck = false;
                 float x, y;
                 
-                while (!passCheck){
+                while (passCheck != true){
                     x = (rand() % (WIDTH_MAP));
                     y = (rand() % (HEIGHT_MAP));
                     if(this->map.getTilePassable(y,x)){
@@ -151,11 +151,21 @@ void Application::update(const sf::Int64 &time) {
                     }
                     
                 }
-        this->vecPickups.push_back(new Powerup(x * 24, y * 24, &this->map, this->vecBases, this->enemyBases));
-        this->canSpawnPowerup = false;
+
+        if(passCheck == true){
+
+            this->vecPickups.push_back(new Powerup(x * 24, y * 24, &this->map, this->vecBases, this->enemyBases));
+            this->canSpawnPowerup = false;
+
+        }
+        
 
     }
-    else{this->canSpawnPowerup = true;}
+    else{
+        
+        this->canSpawnPowerup = true;
+        
+    }
     
     bool collision;
 

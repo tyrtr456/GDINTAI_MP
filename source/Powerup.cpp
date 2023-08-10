@@ -31,6 +31,13 @@ Powerup::Powerup(int posX, int posY, Map *pMap, std::vector<Base*> vecBases, std
 
     }
 
+    else if(this->EType == CHAOS){
+
+        this->mTexture.loadFromFile("media/chaosSprite.png");
+
+
+    }
+
     
     
     this->mSprite.setTexture(mTexture);
@@ -90,7 +97,7 @@ bool Powerup::isActive(){
                 bool passCheck = false;
                 float x, y;
                 
-                while (!passCheck){
+                 while (passCheck != true){
                     x = (rand() % (WIDTH_MAP));
                     y = (rand() % (HEIGHT_MAP));
                     if(this->pMap->getTilePassable(y,x)){
@@ -98,13 +105,17 @@ bool Powerup::isActive(){
                     }
                     
                 }
-                pBase->setPos(x * 24, y * 24);
+                if(passCheck == true){
+
+                    pBase->setPos(x * 24, y * 24);
+
+                }
             }
 
             for(Base* pBase : this->vecEnemyBases){
                 bool passCheck = false;
                 float x, y;
-                while (!passCheck){
+                while (passCheck != true){
                     x = ((rand() % (WIDTH_MAP - 4)) + 2);
                     y = ((rand() % (HEIGHT_MAP - 2)) + 1);
                     if(this->pMap->getTilePassable(y,x)){
@@ -112,7 +123,12 @@ bool Powerup::isActive(){
                     }
                     
                 }
-                pBase->setPos(x * 24, y * 24);
+
+                if(passCheck == true){
+
+                    pBase->setPos(x * 24, y * 24);
+
+                }
             }
             this->collapse();
             break;
