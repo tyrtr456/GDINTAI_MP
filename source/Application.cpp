@@ -15,11 +15,6 @@ Application::Application()
 
     this->nTimer = 60;
 
-
-    
-  
-
-    
     //this->packOfEnemies.push_back(new Enemy(147,391));
     // this->packOfEnemies.push_back(new Enemy(532,391));
     // this->packOfEnemies.push_back(new Enemy(628,31));
